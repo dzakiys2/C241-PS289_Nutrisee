@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:textColor="@color/black"
             android:text="@string/welcome" />
 
@@ -31,7 +31,7 @@
             android:layout_width="233dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:text="@string/onboard1"
             android:textAlignment="center"
             android:textColor="@color/soft_gray"
@@ -40,12 +40,12 @@
         <Button
             android:id="@+id/next_button"
             android:layout_width="190dp"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:layout_marginTop="26dp"
             android:text="@string/next"
             android:textSize="16sp"
-            android:background="@drawable/bg_button"
-            android:fontFamily="@font/abeezee_reguler"/>
+            style="@style/ButtonSoftBlue"
+            android:fontFamily="@font/abeezee_regular"/>
 
     </LinearLayout>
 

@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/broken_white"
+    tools:context=".fragment.UserFragment">
+
+    <LinearLayout
+        android:id="@+id/top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_marginTop="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="16dp">
+
+        <!-- Mengganti Button pertama dengan CardView -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:backgroundTint="@color/soft_blue"
+            app:cardCornerRadius="16dp">
+
+            <!-- Konten dalam CardView -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:textSize="25sp"
+                android:text="@string/freeacc"
+                android:textColor="@color/broken_white"
+                android:textAlignment="center"
+                android:fontFamily="@font/abeezee_regular"
+                android:gravity="center" />
+            <Button
+                android:layout_width="280dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/text_premium"
+                android:textColor="@color/dark_blue"
+                android:textSize="15sp"
+                style="@style/ButtonWhite"/>
+
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/sign_out"
+            android:textColor="@color/dark_blue"
+            android:drawableLeft="@drawable/ic_logout"
+            android:gravity="left|center"
+            android:drawablePadding="8dp"
+            style="@style/ButtonWhite"/>
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:text="@string/app_version"
+            android:textColor="@color/dark_blue"
+            android:drawableLeft="@drawable/ic_phone"
+            android:gravity="left|center"
+            android:drawablePadding="8dp"
+            style="@style/ButtonWhite"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (sessionManager.getUserName() != null && sessionManager.getUserEmail() != null) {
                 // If user session exists, navigate to MainActivity
-                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                 startActivity(intent)
             } else {
                 // If no user session, navigate to OnBoard1Activity

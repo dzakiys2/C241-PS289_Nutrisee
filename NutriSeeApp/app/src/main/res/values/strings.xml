@@ -15,7 +15,7 @@
     <string name="email_blank">Email Invalid</string>
     <string name="name_blank">Name Must Fill</string>
     <string name="email_error">Format Email</string>
-    <string name="string_in_login">Log in to access Nutrisee App</string>
+    <string name="string_in_login">Sign in to access Nutrisee App</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
@@ -23,4 +23,11 @@
     <string name="hvaccount">Have an Account?</string>
     <string name="string_in_register">Sign Up &amp; Explore</string>
     <string name="forgot_pass">Forgot Password?</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Galery</string>
+    <string name="analyze">Analyze</string>
+    <string name="freeacc">Your account status : Free Tier</string>
+    <string name="text_premium">Unlock NutriSee Premium</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="app_version">App Version \t\t\t\t\t\t\t\t\t\t\t\t 1.0.0</string>
 </resources>

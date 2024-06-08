@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
+        android:id="@+id/nav_home"
         android:title="Home"
         android:icon="@drawable/ic_home"/>
     <item
-        android:id="@+id/search"
+        android:id="@+id/nav_search"
         android:title="Search"
         android:icon="@drawable/ic_search"/>
     <item
-        android:id="@+id/fab"
-        android:title=""
-        android:enabled="false"/>
+        android:id="@+id/nav_camera"
+        android:title="Camera"
+        android:icon="@drawable/ic_camera"/>
     <item
-        android:id="@+id/history"
+        android:id="@+id/nav_history"
         android:title="History"
         android:icon="@drawable/ic_history"/>
     <item
-        android:id="@+id/account"
+        android:id="@+id/nav_user"
         android:title="Accout"
         android:icon="@drawable/ic_person"/>
 

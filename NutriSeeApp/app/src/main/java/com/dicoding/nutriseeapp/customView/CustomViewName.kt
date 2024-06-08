@@ -24,7 +24,7 @@ class CustomViewName: AppCompatEditText {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        hint = "your name"
+        hint = "Your name"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 

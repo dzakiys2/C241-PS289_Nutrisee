@@ -23,9 +23,10 @@
         <TextView
             android:id="@+id/sign_in_top"
             android:textColor="@color/black"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:textSize="40sp"
             android:paddingTop="20dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/sign_up"/>
@@ -33,7 +34,7 @@
         <TextView
             android:id="@+id/string_in_login"
             android:textColor="@color/soft_gray"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:textSize="20sp"
             android:paddingTop="20dp"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/abeezee_reguler"
+                android:fontFamily="@font/abeezee_regular"
                 android:text="@string/name"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -79,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/abeezee_reguler"
+                android:fontFamily="@font/abeezee_regular"
                 android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -107,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/abeezee_reguler"
+                android:fontFamily="@font/abeezee_regular"
                 android:text="@string/password"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -134,12 +135,11 @@
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="26dp"
                 android:text="@string/sign_up"
                 android:textSize="20sp"
-                android:background="@drawable/bg_button"
-                android:fontFamily="@font/abeezee_reguler"/>
+                style="@style/ButtonSoftBlue"/>
 
             <LinearLayout
                 android:id="@+id/bot"
@@ -154,7 +154,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/abeezee_reguler"
+                    android:fontFamily="@font/abeezee_regular"
                     android:text="@string/hvaccount"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -166,7 +166,7 @@
                     android:layout_marginStart="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:fontFamily="@font/abeezee_reguler"
+                    android:fontFamily="@font/abeezee_regular"
                     android:onClick="onClick"
                     android:text="@string/sign_in"
                     android:textColor="@color/dark_blue"

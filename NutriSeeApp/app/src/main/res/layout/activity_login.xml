@@ -24,9 +24,10 @@
         <TextView
             android:id="@+id/sign_in_top"
             android:textColor="@color/black"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:textSize="40sp"
             android:paddingTop="20dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/sign_in"/>
@@ -34,7 +35,7 @@
         <TextView
             android:id="@+id/string_in_login"
             android:textColor="@color/soft_gray"
-            android:fontFamily="@font/abeezee_reguler"
+            android:fontFamily="@font/abeezee_regular"
             android:textSize="20sp"
             android:paddingTop="20dp"
             android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/abeezee_reguler"
+                android:fontFamily="@font/abeezee_regular"
                 android:text="@string/email"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -81,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/abeezee_reguler"
+                android:fontFamily="@font/abeezee_regular"
                 android:text="@string/password"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -106,34 +107,16 @@
                     android:textColor="@color/black"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
-            <LinearLayout
-                android:id="@+id/forgot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:alpha="1">
-            <TextView
-                android:id="@+id/forgot_click"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/abeezee_reguler"
-                android:text="@string/forgot_pass"
-                android:textColor="@color/dark_blue"
-                android:onClick="onClick"
-                android:textSize="15sp"
-                android:alpha="1"/>
-            </LinearLayout>
+
             <Button
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="65dp"
                 android:layout_marginTop="26dp"
                 android:text="@string/sign_in"
                 android:textSize="20sp"
-                android:background="@drawable/bg_button"
-                android:fontFamily="@font/abeezee_reguler"/>
+                style="@style/ButtonSoftBlue"
+                android:fontFamily="@font/abeezee_regular"/>
 
             <LinearLayout
                 android:id="@+id/bot"
@@ -148,7 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/abeezee_reguler"
+                    android:fontFamily="@font/abeezee_regular"
                     android:text="@string/noaccount"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -160,7 +143,7 @@
                     android:layout_marginStart="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:fontFamily="@font/abeezee_reguler"
+                    android:fontFamily="@font/abeezee_regular"
                     android:onClick="onClick"
                     android:text="@string/sign_up"
                     android:textColor="@color/dark_blue"
