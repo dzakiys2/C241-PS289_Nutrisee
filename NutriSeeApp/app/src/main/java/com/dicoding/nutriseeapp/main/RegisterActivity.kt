@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
@@ -11,6 +12,9 @@ import com.dicoding.nutriseeapp.R
 import com.dicoding.nutriseeapp.customView.CustomViewEmail
 import com.dicoding.nutriseeapp.customView.CustomViewName
 import com.dicoding.nutriseeapp.customView.CustomViewPassword
+import com.dicoding.nutriseeapp.utils.SessionManager
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
@@ -21,12 +25,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var emailEditText: CustomViewEmail
     private lateinit var passwordEditText: CustomViewPassword
     private lateinit var nameEditText: CustomViewName
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        sessionManager = SessionManager(this)
 
         loadingAnimation = findViewById(R.id.loading_animation)
         val registerButton: Button = findViewById(R.id.register_button)
@@ -34,45 +40,87 @@ class RegisterActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.edt_password)
         nameEditText = findViewById(R.id.edt_name)
 
-        registerButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
-            val name = nameEditText.text.toString().trim()
-
-            if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()) {
-                loadingAnimation.visibility = View.VISIBLE
-                loadingAnimation.playAnimation()
-
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val user = firebaseAuth.currentUser
-                            val profileUpdates = UserProfileChangeRequest.Builder()
-                                .setDisplayName(name)
-                                .build()
-
-                            user?.updateProfile(profileUpdates)
-                                ?.addOnCompleteListener { updateTask ->
-                                    loadingAnimation.visibility = View.GONE
-                                    loadingAnimation.cancelAnimation()
-
-                                    if (updateTask.isSuccessful) {
-                                        Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
-                                        startActivity(Intent(this, LoginActivity::class.java))
-                                        finish()
-                                    } else {
-                                        Toast.makeText(this, "Profile update failed: ${updateTask.exception?.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                        } else {
-                            loadingAnimation.visibility = View.GONE
-                            loadingAnimation.cancelAnimation()
-                            Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "Please enter name, email, and password", Toast.LENGTH_SHORT).show()
-            }
+        val signInTextView: TextView = findViewById(R.id.signin_click)
+        signInTextView.setOnClickListener {
+            goToLoginActivity()
         }
+
+        registerButton.setOnClickListener {
+            registerUser()
+        }
+    }
+
+    private fun goToLoginActivity() {
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    private fun registerUser() {
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+        val name = nameEditText.text.toString().trim()
+
+        if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()) {
+            showLoadingAnimation()
+
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        updateUserProfile(name, email)
+                    } else {
+                        handleRegistrationFailure(task)
+                    }
+                }
+        } else {
+            showToast("Please enter name, email, and password")
+        }
+    }
+
+    private fun showLoadingAnimation() {
+        loadingAnimation.visibility = View.VISIBLE
+        loadingAnimation.playAnimation()
+    }
+
+    private fun updateUserProfile(name: String, email: String) {
+        val user = firebaseAuth.currentUser
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(name)
+            .build()
+
+        user?.updateProfile(profileUpdates)
+            ?.addOnCompleteListener { updateTask ->
+                hideLoadingAnimation()
+
+                if (updateTask.isSuccessful) {
+                    handleRegistrationSuccess(name, email)
+                } else {
+                    handleProfileUpdateFailure(updateTask)
+                }
+            }
+    }
+
+    private fun hideLoadingAnimation() {
+        loadingAnimation.visibility = View.GONE
+        loadingAnimation.cancelAnimation()
+    }
+
+    private fun handleRegistrationSuccess(name: String, email: String) {
+        sessionManager.saveUserSession(name, email)
+        showToast("Registration successful!")
+        goToLoginActivity()
+        finish()
+    }
+
+    private fun handleRegistrationFailure(task: Task<AuthResult>) {
+        hideLoadingAnimation()
+        showToast("Registration failed: ${task.exception?.message}")
+    }
+
+    private fun handleProfileUpdateFailure(task: Task<Void>) {
+        hideLoadingAnimation()
+        showToast("Profile update failed: ${task.exception?.message}")
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

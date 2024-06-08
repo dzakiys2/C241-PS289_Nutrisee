@@ -65,7 +65,7 @@
                 android:layout_marginBottom="16dp"
                 android:alpha="1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconDrawable="@drawable/ic_email">
+                app:startIconDrawable="@drawable/ic_person">
                 <com.dicoding.nutriseeapp.customView.CustomViewName
                     android:id="@+id/edt_name"
                     android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                 android:layout_marginBottom="16dp"
                 android:alpha="1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconDrawable="@drawable/ic_key"> <!-- Replace with your key icon resource -->
+                app:startIconDrawable="@drawable/ic_key">
 
                 <com.dicoding.nutriseeapp.customView.CustomViewPassword
                     android:id="@+id/edt_password"
@@ -155,12 +155,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/abeezee_reguler"
-                    android:text="@string/noaccount"
+                    android:text="@string/hvaccount"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/signup_click"
+                    android:id="@+id/signin_click"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
