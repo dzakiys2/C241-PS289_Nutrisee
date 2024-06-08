@@ -1,12 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/broken_white">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Register Duluu">
-    </TextView>
+    android:background="@color/broken_white"
+    tools:context=".main.RegisterActivity">
 
+    <LinearLayout
+        android:id="@+id/top_bar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/logokecil"/>
+
+        <TextView
+            android:id="@+id/sign_in_top"
+            android:textColor="@color/black"
+            android:fontFamily="@font/abeezee_reguler"
+            android:textSize="40sp"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/sign_up"/>
+
+        <TextView
+            android:id="@+id/string_in_login"
+            android:textColor="@color/soft_gray"
+            android:fontFamily="@font/abeezee_reguler"
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/string_in_register"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="300dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/nameview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/abeezee_reguler"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:alpha="1"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:alpha="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_email">
+                <com.dicoding.nutriseeapp.customView.CustomViewName
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/emailview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/abeezee_reguler"
+                android:text="@string/email"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:alpha="1"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:alpha="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_email">
+                <com.dicoding.nutriseeapp.customView.CustomViewEmail
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/pwview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/abeezee_reguler"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:alpha="1"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutpw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:alpha="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/ic_key"> <!-- Replace with your key icon resource -->
+
+                <com.dicoding.nutriseeapp.customView.CustomViewPassword
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="26dp"
+                android:text="@string/sign_up"
+                android:textSize="20sp"
+                android:background="@drawable/bg_button"
+                android:fontFamily="@font/abeezee_reguler"/>
+
+            <LinearLayout
+                android:id="@+id/bot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:alpha="1"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/abeezee_reguler"
+                    android:text="@string/noaccount"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/signup_click"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/abeezee_reguler"
+                    android:onClick="onClick"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loadinganimation" />
 </RelativeLayout>

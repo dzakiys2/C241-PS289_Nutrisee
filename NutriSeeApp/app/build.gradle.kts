@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id ("kotlin-parcelize")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -56,17 +57,17 @@ dependencies {
     implementation (libs.androidx.navigation.ui.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    //API
+    //api
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
     implementation (libs.glide)
-    //DATA
+    //data
     implementation (libs.androidx.datastore.preferences)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.extensions)
-    //LOTTIE
+    //lottie
     implementation (libs.lottie)
     //save information
     implementation (libs.androidx.datastore.preferences)
@@ -94,4 +95,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-auth")
 }

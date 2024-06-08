@@ -1,9 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboard3"
     android:background="@color/broken_white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".main.OnBoard3Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +23,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:fontFamily="@font/abeezee_reguler"
+            android:textColor="@color/black"
             android:text="@string/welcome3" />
 
         <TextView
@@ -37,7 +40,7 @@
             android:layout_width="190dp"
             android:layout_height="55dp"
             android:layout_marginTop="26dp"
-            android:text="@string/login"
+            android:text="@string/sign_in"
             android:textSize="16sp"
             android:background="@drawable/bg_button"
             android:fontFamily="@font/abeezee_reguler"/>

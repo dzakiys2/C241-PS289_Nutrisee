@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NutriSeeApp</string>
-    <string name="welcome">Welcome!</string>
+    <string name="welcome">Selamat Datang!</string>
     <string name="onboard1"> NutriSee provides tailored dietary advice based on your individual needs and goals, helping you make informed nutrition choices for a healthier lifestyle.!</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -10,16 +11,16 @@
     <string name="onboard3">NutriSee offers personalized dietary guidance tailored to your specific requirements and objectives, empowering you to make well-informed nutritional decisions for a healthier way of life.</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
-    <string name="password_error">Password should have at least 8 characters</string>
-    <string name="password_blank">Password Invalid</string>
-    <string name="email_blank">Email Invalid</string>
-    <string name="name_blank">Name Must Fill</string>
+    <string name="password_error">Password minimal 8 karakter</string>
+    <string name="password_blank">Password Harus Diisi</string>
+    <string name="email_blank">Email Harus Diisi</string>
+    <string name="name_blank">Nama Harus Diisi</string>
     <string name="email_error">Format Email</string>
     <string name="string_in_login">Log in to access Nutrisee App</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
-    <string name="noaccount">Don\'t have an Account?</string>
+    <string name="noaccount">Belum Punya Akun?</string>
     <string name="hvaccount">Have an Account?</string>
     <string name="string_in_register">Sign Up &amp; Explore</string>
     <string name="forgot_pass">Forgot Password?</string>
