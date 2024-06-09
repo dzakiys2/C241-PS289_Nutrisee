@@ -13,20 +13,64 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:gravity="center"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="16dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="16dp">
 
-        <!-- Mengganti Button pertama dengan CardView -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/userProfileImageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_account"
+                    android:scaleType="centerCrop"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/userNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="19sp"
+                    android:text="Nama Pengguna"
+                    android:textColor="@color/dark_blue"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/userEmailTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="email@example.com"
+                    android:textColor="@color/dark_blue"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:gravity="center" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
         <androidx.cardview.widget.CardView
             android:layout_width="300dp"
             android:layout_height="170dp"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:backgroundTint="@color/soft_blue"
             app:cardCornerRadius="16dp">
 
-            <!-- Konten dalam CardView -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -67,7 +111,15 @@
             android:drawableLeft="@drawable/ic_phone"
             android:gravity="left|center"
             android:drawablePadding="8dp"
-            style="@style/ButtonWhite"/>
+            style="@style/ButtonWhite"/><Button
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:text="@string/app_version"
+        android:textColor="@color/dark_blue"
+        android:drawableLeft="@drawable/ic_phone"
+        android:gravity="left|center"
+        android:drawablePadding="8dp"
+        style="@style/ButtonWhite"/>
     </LinearLayout>
 
 </RelativeLayout>

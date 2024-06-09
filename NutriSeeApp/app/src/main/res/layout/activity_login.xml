@@ -96,8 +96,7 @@
                 android:alpha="1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:startIconDrawable="@drawable/ic_key"
-                app:endIconMode="password_toggle"
-                app:endIconDrawable="@drawable/ic_eye_visible"> <!-- Replace with your eye icon resource -->
+                app:endIconMode="password_toggle">
 
                 <com.dicoding.nutriseeapp.customView.CustomViewPassword
                     android:id="@+id/edt_password"

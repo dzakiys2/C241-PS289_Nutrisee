@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/broken_white"
     tools:context=".fragment.CameraFragment">
-
     <LinearLayout
         android:id="@+id/top_section"
         android:layout_width="match_parent"
@@ -15,7 +14,6 @@
         android:padding="16dp"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="16dp">
-
         <ImageView
             android:id="@+id/previewImageView"
             android:layout_width="match_parent"
@@ -24,7 +22,6 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/baseline_insert_photo_24" />
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -43,36 +40,23 @@
 
             <Button
                 android:id="@+id/cameraButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1"
+                style="@style/ButtonDarkBlue"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_nav"
                 android:text="@string/camera" />
 
             <Button
                 android:id="@+id/galleryButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_nav"
+                style="@style/ButtonDarkBlue"
                 android:textColor="@color/white"
                 android:text="@string/gallery" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/uploadButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
-            style="@style/ButtonDarkBlue"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:padding="16dp"
-            android:text="@string/analyze" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieloading"
@@ -83,6 +67,17 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/loadinganimation" />
+
+        <Button
+            android:id="@+id/uploadButton"
+            style="@style/ButtonLightGray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:padding="16dp"
+            android:text="@string/analyze"
+            android:textColor="@color/dark_blue"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </RelativeLayout>
