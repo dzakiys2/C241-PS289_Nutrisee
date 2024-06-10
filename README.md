@@ -22,7 +22,7 @@ Member Name:
 ## Backgrounder
 
 In 2022, WHO (World Health Organization) data revealed a global health crisis: 2.5 billion adults were overweight, with 890 million obese. Regardless of weight, neglecting nutrition labels heightens health risks, fostering poor dietary choices and fueling obesity, diabetes,
-and other diseases. NutriSee tackles this by offering accessible nutrition information andempowering users to make informed dietary decisions. Through promoting awareness andcomprehension of nutritional labeling, NutriSee endeavors to mitigate the prevalence of nutrition-related health issues, striving for improved global health outcomes.
+and other diseases. NutriSee tackles this by offering accessible nutrition information andempowering users to make informed dietary decisions. Through promoting awareness and comprehension of nutritional labeling, NutriSee endeavors to mitigate the prevalence of nutrition-related health issues, striving for improved global health outcomes.
 
 ## About Our App
 
