@@ -1,4 +1,4 @@
-# C241-PS289_Nutrisee
+# C241-PS289_NutriSee
 
 ![](doc/Recyclops.png)
 
