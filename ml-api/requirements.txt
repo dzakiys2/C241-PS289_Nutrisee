@@ -1,1 +1,6 @@
 Flask
+gunicorn
+numpy
+pillow
+tensorflow
+tensorflow-hub
