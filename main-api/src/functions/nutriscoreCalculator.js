@@ -106,12 +106,4 @@ const determineNutriScoreLetter = (score, type, sub_type) => {
     }
 };
 
-// Helper function to get points based on value and thresholds
-const getNPoints = (value, thresholds) => {
-    for (let i = 0; i < thresholds.length; i++) {
-      if (value <= thresholds[i]) return i;
-    }
-    return thresholds.length;
-};
-
 module.exports = { calculateNutriScore, determineNutriScoreLetter, nutriScoreCalculator };
