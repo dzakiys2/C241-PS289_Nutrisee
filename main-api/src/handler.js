@@ -4,7 +4,11 @@ const axios = require('axios');
 const filterEmail = require('./helper/emailFilter');
 const serviceAccount = process.env.SERVICE_ACCOUNT_KEY;
 const projectId = process.env.PROJECT_ID;
+
 const admin = require('firebase-admin');
+
+const FIREBASE_API_KEY = process.env.FIREBASE_API_KEY;
+
 const storage = new Storage({
     projectId,
     serviceAccount
@@ -24,11 +28,13 @@ const uploadImage = async (req, res) => {
     }
     
         const email = req.user.email;
+        console.log('User Email:', email);
         const filteredEmail = filterEmail(email);
+        console.log('Filtered Email:', filteredEmail);
         const productImage = req.file;
         const currentDate = new Date().toISOString().replace(/:/g, '-');
         const filename = `${filteredEmail}/${currentDate}.jpg`;
-
+        console.log('Filename:', filename);
         await storage.bucket(bucketName).file(filename).save(productImage.buffer, {
             metadata: {
             contentType: 'image/jpeg',
@@ -36,10 +42,12 @@ const uploadImage = async (req, res) => {
     });
 
         const imageUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+        console.log('Image URL:', imageUrl);
         result = await axios.post(mlAPI, {imageUrl})
-        const classificationResult = result.data.label;
+        const classificationResult = result.data.product_name;
         const confidenceResult = (result.data.confidence * 100).toFixed(2);
-       
+        console.log('Classification Result:', classificationResult);
+        console.log('Confidence Result:', confidenceResult);
         // Retrieve product data from Firebase
         const dbRef = admin.database().ref('products').child(classificationResult);
         const snapshot = await dbRef.once('value');
@@ -88,4 +96,68 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = uploadImage;
+
+/**
+ * @swagger
+ * /get-token:
+ *   post:
+ *     summary: Get Firebase access token
+ *     description: Sign in with email and password to get an access token for testing.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: atmin.nutrisee@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: password
+ *     responses:
+ *       200:
+ *         description: Access token generated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Bad request - invalid email or password.
+ */
+const getToken = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Firebase REST API endpoint for verifying password
+    const url = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${FIREBASE_API_KEY}`;
+
+    // Request payload
+    const payload = {
+      email,
+      password,
+      returnSecureToken: true
+    };
+
+    // Make the HTTP POST request to Firebase Authentication REST API
+    const response = await axios.post(url, payload);
+
+    // Extract the ID token from the response
+    const idToken = response.data.idToken;
+
+    // Send the ID token in the response
+    res.json({ token: `Bearer ${idToken}` });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
+module.exports = { uploadImage, getToken };
