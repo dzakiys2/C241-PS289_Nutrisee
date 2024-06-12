@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         google {
@@ -19,6 +21,7 @@ dependencyResolutionManagement {
         maven(url = "https://jitpack.io")
     }
 }
+
 
 rootProject.name = "NutriSeeApp"
 include(":app")

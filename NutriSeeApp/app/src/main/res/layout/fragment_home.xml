@@ -1,14 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/broken_white"
+    tools:context=".fragment.HomeFragment"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HOME" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/abeezee_regular"
+                android:text="Hey, Welcome Back to NutriSee, {name}"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/logokecil"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_nav"
+            android:padding="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12 Products Scanned"
+                android:fontFamily="@font/abeezee_regular"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/orange"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Get to know more about products you eat using AI Product Scanner"
+                android:textSize="16sp"
+                android:fontFamily="@font/abeezee_regular"
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Scan Now"
+                android:layout_gravity="center"
+                android:textColor="@color/dark_blue"
+                style="@style/ButtonWhite"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recent Scan"
+                android:layout_weight="1"
+                android:fontFamily="@font/abeezee_regular"
+                android:textSize="20sp"
+                android:layout_marginTop="16dp" />
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                style="@style/ButtonDarkBlue"
+                android:textColor="@color/white"
+                android:text="See All"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Articles For You"
+                android:layout_weight="1"
+                android:fontFamily="@font/abeezee_regular"
+                android:textSize="20sp"
+                android:layout_marginTop="16dp" />
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                style="@style/ButtonDarkBlue"
+                android:textColor="@color/white"
+                android:text="More"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>

@@ -5,27 +5,32 @@ import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private var prefs: SharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
 
     companion object {
-        private const val PREFS_NAME = "user_session"
-        private const val KEY_USER_NAME = "user_name"
-        private const val KEY_USER_EMAIL = "user_email"
+        private const val USER_NAME = "user_name"
+        private const val USER_EMAIL = "user_email"
+        private const val USER_TOKEN = "user_token"
     }
 
-    fun saveUserSession(name: String, email: String) {
+    fun saveUserSession(name: String, email: String, token: String?) {
         val editor = prefs.edit()
-        editor.putString(KEY_USER_NAME, name)
-        editor.putString(KEY_USER_EMAIL, email)
+        editor.putString(USER_NAME, name)
+        editor.putString(USER_EMAIL, email)
+        editor.putString(USER_TOKEN, token)
         editor.apply()
     }
 
     fun getUserName(): String? {
-        return prefs.getString(KEY_USER_NAME, null)
+        return prefs.getString(USER_NAME, null)
     }
 
     fun getUserEmail(): String? {
-        return prefs.getString(KEY_USER_EMAIL, null)
+        return prefs.getString(USER_EMAIL, null)
+    }
+
+    fun getUserToken(): String? {
+        return prefs.getString(USER_TOKEN, null)
     }
 
     fun clearSession() {

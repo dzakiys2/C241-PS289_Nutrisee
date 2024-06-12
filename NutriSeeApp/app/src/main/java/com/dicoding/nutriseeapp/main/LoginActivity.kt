@@ -53,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
         }
         loginButton.setOnClickListener { loginUser() }
     }
-
     private fun loginUser() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
@@ -65,9 +64,16 @@ class LoginActivity : AppCompatActivity() {
                     hideLoadingAnimation()
                     if (task.isSuccessful) {
                         val user = firebaseAuth.currentUser
-                        val name = user?.displayName ?: ""
-                        sessionManager.saveUserSession(name, email)
-                        navigateToHome()
+                        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                            if (tokenTask.isSuccessful) {
+                                val idToken = tokenTask.result?.token
+                                val name = user.displayName ?: ""
+                                sessionManager.saveUserSession(name, email, idToken)
+                                navigateToHome()
+                            } else {
+                                handleLoginError(tokenTask.exception?.message)
+                            }
+                        }
                     } else {
                         handleLoginError(task.exception?.message)
                     }
@@ -76,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
             showEmptyFieldsMessage()
         }
     }
+
 
     private fun showLoadingAnimation() {
         loadingAnimation.visibility = View.VISIBLE

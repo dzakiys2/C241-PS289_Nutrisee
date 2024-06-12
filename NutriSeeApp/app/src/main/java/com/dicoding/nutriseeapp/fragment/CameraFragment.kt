@@ -6,56 +6,50 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.dicoding.nutriseeapp.R
+import com.dicoding.nutriseeapp.utils.SessionManager
 import com.yalantis.ucrop.UCrop
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class CameraFragment : Fragment() {
 
-    private lateinit var btnTakePhoto: Button
-    private lateinit var btnChooseFromGallery: Button
-    private lateinit var imgPreview: ImageView
-
+    private lateinit var flipCameraButton: Button
+    private lateinit var captureButton: Button
+    private lateinit var galleryButton: Button
+    private lateinit var previewView: PreviewView
+    private lateinit var imageCapture: ImageCapture
+    private lateinit var cameraExecutor: ExecutorService
     private var currentPhotoPath: String? = null
+    private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
+    private lateinit var sessionManager: SessionManager
 
-    private val takePhotoLauncher = registerForActivityResult(
+    private val galleryLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            currentPhotoPath?.let {
-                val photoFile = File(it)
-                val photoUri = FileProvider.getUriForFile(
-                    requireContext(),
-                    "com.dicoding.nutriseeapp.fileprovider",
-                    photoFile
-                )
-                startUCrop(photoUri)
-            }
-        }
-    }
-
-    private val chooseFromGalleryLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val photoUri = result.data?.data
-            if (photoUri != null) {
-                startUCrop(photoUri)
+            result.data?.data?.let { uri ->
+                startUCrop(uri)
             }
         }
     }
@@ -66,102 +60,165 @@ class CameraFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_camera, container, false)
 
-        btnTakePhoto = view.findViewById(R.id.cameraButton)
-        btnChooseFromGallery = view.findViewById(R.id.galleryButton)
-        imgPreview = view.findViewById(R.id.previewImageView)
+        sessionManager = SessionManager(requireContext())
 
-        btnTakePhoto.setOnClickListener {
+        previewView = view.findViewById(R.id.previewView)
+        flipCameraButton = view.findViewById(R.id.flipCameraButton)
+        captureButton = view.findViewById(R.id.captureButton)
+        galleryButton = view.findViewById(R.id.galleryButton)
+
+        captureButton.setOnClickListener {
             takePhoto()
         }
 
-        btnChooseFromGallery.setOnClickListener {
+        flipCameraButton.setOnClickListener {
+            flipCamera()
+        }
+
+        galleryButton.setOnClickListener {
             chooseFromGallery()
         }
+
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                REQUIRED_PERMISSIONS,
+                REQUEST_CODE_PERMISSIONS
+            )
+        }
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
 
         return view
     }
 
-    private fun takePhoto() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
-                REQUEST_CODE_PERMISSIONS
-            )
-        } else {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            val photoFile: File? = try {
-                createImageFile()
-            } catch (ex: IOException) {
-                Toast.makeText(requireContext(), "Error occurred while creating the file", Toast.LENGTH_SHORT).show()
-                null
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = androidx.camera.core.Preview.Builder().build()
+                .also {
+                    it.setSurfaceProvider(previewView.surfaceProvider)
+                }
+
+            imageCapture = ImageCapture.Builder().build()
+
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(
+                    this, lensFacing, preview, imageCapture)
+            } catch(exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
             }
 
-            photoFile?.also {
-                val photoURI: Uri = FileProvider.getUriForFile(
-                    requireContext(),
-                    "com.dicoding.nutriseeapp.fileprovider",
-                    it
-                )
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                takePhotoLauncher.launch(intent)
-            }
-        }
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun chooseFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        chooseFromGalleryLauncher.launch(intent)
+    private fun flipCamera() {
+        lensFacing = if (lensFacing == CameraSelector.DEFAULT_BACK_CAMERA) {
+            CameraSelector.DEFAULT_FRONT_CAMERA
+        } else {
+            CameraSelector.DEFAULT_BACK_CAMERA
+        }
+        startCamera()
+    }
+
+    private fun takePhoto() {
+        val imageCapture = imageCapture ?: return
+
+        val photoFile = createImageFile()
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(requireContext()),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
+                    startUCrop(savedUri)
+                }
+            }
+        )
     }
 
     private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val storageDir: File = requireActivity().getExternalFilesDir(null)!!
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
+        val storageDir: File? = requireContext().getExternalFilesDir(null)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
+            "JPEG_${timeStamp}_", ".jpg", storageDir
         ).apply {
             currentPhotoPath = absolutePath
         }
     }
 
+    private fun chooseFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryLauncher.launch(intent)
+    }
+
     private fun startUCrop(sourceUri: Uri) {
         val destinationUri = Uri.fromFile(File(requireContext().cacheDir, "IMG_CROPPED.jpg"))
-        val options = UCrop.Options()
+        val options = UCrop.Options().apply {
+            setFreeStyleCropEnabled(true)
+            setHideBottomControls(true)
+        }
         UCrop.of(sourceUri, destinationUri)
             .withAspectRatio(1f, 1f)
-            .withMaxResultSize(450, 450)
             .withOptions(options)
             .start(requireContext(), this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri = UCrop.getOutput(data!!)
+            resultUri?.let { uri ->
+                navigateToUploadFragment(uri)
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            Toast.makeText(requireContext(), cropError?.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                takePhoto()
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                Toast.makeText(requireContext(), "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
+                activity?.finish()
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == UCrop.REQUEST_CROP && resultCode == Activity.RESULT_OK) {
-            val resultUri = UCrop.getOutput(data!!)
-            imgPreview.setImageURI(resultUri) // Menampilkan gambar setelah proses crop
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            requireContext(), it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun navigateToUploadFragment(imageUri: Uri) {
+        val fragment = UploadFragment.newInstance(imageUri.toString())
+        parentFragmentManager.commit {
+            replace(R.id.frame_layout, fragment)
+            addToBackStack(null)
         }
     }
 
     companion object {
+        private const val TAG = "CameraFragment"
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     }
 }

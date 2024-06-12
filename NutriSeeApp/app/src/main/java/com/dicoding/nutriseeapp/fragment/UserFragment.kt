@@ -12,16 +12,14 @@ import com.dicoding.nutriseeapp.R
 import com.dicoding.nutriseeapp.main.LoginActivity
 import com.dicoding.nutriseeapp.utils.SessionManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class UserFragment : Fragment() {
 
     private lateinit var sessionManager: SessionManager
     private lateinit var auth: FirebaseAuth
-    private var currentUser: FirebaseUser? = null
 
     private lateinit var userNameTextView: TextView
-    private lateinit var userEmailTextView: TextView
+    private lateinit var userTokenTextView: TextView
     private lateinit var btnLogout: Button
 
     override fun onCreateView(
@@ -31,7 +29,7 @@ class UserFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_user, container, false)
 
         userNameTextView = view.findViewById(R.id.userNameTextView)
-        userEmailTextView = view.findViewById(R.id.userEmailTextView)
+        userTokenTextView = view.findViewById(R.id.userEmailTextView) // Changed id reference
         btnLogout = view.findViewById(R.id.btnLogout)
 
         return view
@@ -42,12 +40,9 @@ class UserFragment : Fragment() {
 
         sessionManager = SessionManager(requireContext())
         auth = FirebaseAuth.getInstance()
-        currentUser = auth.currentUser
 
-        currentUser?.let { user ->
-            userNameTextView.text = user.displayName
-            userEmailTextView.text = user.email
-        }
+        userNameTextView.text = sessionManager.getUserName()
+        userTokenTextView.text = sessionManager.getUserToken() // Display token instead of email
 
         btnLogout.setOnClickListener {
             logout()
@@ -60,4 +55,3 @@ class UserFragment : Fragment() {
         requireActivity().finish()
     }
 }
-

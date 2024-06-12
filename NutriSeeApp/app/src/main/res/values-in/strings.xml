@@ -27,8 +27,10 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="analyze">Analyze</string>
-    <string name="freeacc">Your account status : Free Tier</string>
+    <string name="freeacc">Your account status :</string>
     <string name="text_premium">Unlock NutriSee Premium</string>
     <string name="sign_out">Sign Out</string>
     <string name="app_version">App Version \t\t\t\t\t\t\t\t\t\t\t\t 1.0.0</string>
+    <string name="free_tier">Free Tier</string>
+    <string name="language">Language</string>
 </resources>

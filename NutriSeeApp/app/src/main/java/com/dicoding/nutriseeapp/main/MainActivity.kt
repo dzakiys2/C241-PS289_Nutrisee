@@ -19,10 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigation)
 
-        // Load the default fragment
         loadFragment(HomeFragment())
 
-        // Set up navigation item selection listener
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {

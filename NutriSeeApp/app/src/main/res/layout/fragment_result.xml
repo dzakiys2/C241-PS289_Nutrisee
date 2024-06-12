@@ -1,14 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ResultFragment">
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/ivProductImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="RESULTTTT" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:contentDescription="Product Image"
+        android:src="@drawable/ic_insert_photo" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivProductImage"
+        android:layout_marginTop="16dp"
+        android:text="Product Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEnergyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvProductName"
+        android:layout_marginTop="16dp"
+        android:text="Energy:"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEnergy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEnergyLabel"
+        android:layout_marginTop="4dp"
+        android:text="120 kkal"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvSugarLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEnergy"
+        android:layout_marginTop="16dp"
+        android:text="Sugar:"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSugarLabel"
+        android:layout_marginTop="4dp"
+        android:text="28,00g"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvConfidenceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSugar"
+        android:layout_marginTop="16dp"
+        android:text="Confidence:"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvConfidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvConfidenceLabel"
+        android:layout_marginTop="4dp"
+        android:text="98.16%"
+        android:textSize="14sp" />
+
+</RelativeLayout>

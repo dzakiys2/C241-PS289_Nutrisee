@@ -15,6 +15,7 @@
             <data android:scheme="https" />
         </intent>
     </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -65,5 +66,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
     </application>
+    <meta-data
+        android:name="NEWS_API_KEY"
+        android:value="${NEWS_API_KEY}"/>
 </manifest>

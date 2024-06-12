@@ -65,7 +65,21 @@ class RegisterActivity : AppCompatActivity() {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        updateUserProfile(name, email)
+                        firebaseAuth.currentUser?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
+                            if (tokenTask.isSuccessful) {
+                                val token = tokenTask.result?.token
+                                if (token != null) {
+                                    sessionManager.saveUserSession(name, email, token)
+                                    updateUserProfile(name, email, token)
+                                } else {
+                                    hideLoadingAnimation()
+                                    showToast("Token generation failed")
+                                }
+                            } else {
+                                hideLoadingAnimation()
+                                showToast("Token generation failed: ${tokenTask.exception?.message}")
+                            }
+                        }
                     } else {
                         handleRegistrationFailure(task)
                     }
@@ -80,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
         loadingAnimation.playAnimation()
     }
 
-    private fun updateUserProfile(name: String, email: String) {
+    private fun updateUserProfile(name: String, email: String, token: String) {
         val user = firebaseAuth.currentUser
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(name)
@@ -91,7 +105,7 @@ class RegisterActivity : AppCompatActivity() {
                 hideLoadingAnimation()
 
                 if (updateTask.isSuccessful) {
-                    handleRegistrationSuccess(name, email)
+                    handleRegistrationSuccess(name, email, token)
                 } else {
                     handleProfileUpdateFailure(updateTask)
                 }
@@ -103,8 +117,8 @@ class RegisterActivity : AppCompatActivity() {
         loadingAnimation.cancelAnimation()
     }
 
-    private fun handleRegistrationSuccess(name: String, email: String) {
-        sessionManager.saveUserSession(name, email)
+    private fun handleRegistrationSuccess(name: String, email: String, token: String) {
+        sessionManager.saveUserSession(name, email, token)
         showToast("Registration successful!")
         goToLoginActivity()
         finish()
