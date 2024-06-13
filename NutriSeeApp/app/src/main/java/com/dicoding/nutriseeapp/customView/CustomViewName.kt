@@ -26,6 +26,8 @@ class CustomViewName: AppCompatEditText {
         super.onDraw(canvas)
         hint = "Your name"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+        setHintTextColor(context.getColor(R.color.soft_gray)) // Set hint color to black
+        setTextColor(context.getColor(R.color.black))
     }
 
     private fun init() {

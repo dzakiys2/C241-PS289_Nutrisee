@@ -20,6 +20,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="100dp"
         android:layout_marginStart="20dp"
+        style="@style/ButtonWhite"
         android:background="@drawable/ic_flip_camera" />
 
     <Button
@@ -29,7 +30,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:background="@drawable/ic_camera" />
+        style="@style/ButtonWhite"
+        android:background="@drawable/ic_camera"/>
 
     <Button
         android:id="@+id/galleryButton"
@@ -39,6 +41,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="100dp"
         android:layout_marginEnd="20dp"
+        style="@style/ButtonWhite"
         android:background="@drawable/ic_gallery" />
 
 </RelativeLayout>

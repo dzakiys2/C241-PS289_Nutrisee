@@ -27,6 +27,7 @@
                 android:text="Hey, Welcome Back to NutriSee, {name}"
                 android:layout_weight="1"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_marginStart="8dp" />
             <ImageView
                 android:layout_width="70dp"
@@ -88,6 +89,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/abeezee_regular"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:layout_marginTop="16dp" />
             <Button
                 android:layout_width="150dp"
@@ -117,6 +119,7 @@
                 android:text="Articles For You"
                 android:layout_weight="1"
                 android:fontFamily="@font/abeezee_regular"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_marginTop="16dp" />
             <Button

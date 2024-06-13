@@ -19,7 +19,7 @@ class UserFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var userNameTextView: TextView
-    private lateinit var userTokenTextView: TextView
+    private lateinit var userEmailTextView: TextView
     private lateinit var btnLogout: Button
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class UserFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_user, container, false)
 
         userNameTextView = view.findViewById(R.id.userNameTextView)
-        userTokenTextView = view.findViewById(R.id.userEmailTextView) // Changed id reference
+        userEmailTextView = view.findViewById(R.id.userEmailTextView) // Changed id reference
         btnLogout = view.findViewById(R.id.btnLogout)
 
         return view
@@ -42,7 +42,7 @@ class UserFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         userNameTextView.text = sessionManager.getUserName()
-        userTokenTextView.text = sessionManager.getUserToken() // Display token instead of email
+        userEmailTextView.text = sessionManager.getUserEmail() // Display token instead of email
 
         btnLogout.setOnClickListener {
             logout()
@@ -50,6 +50,7 @@ class UserFragment : Fragment() {
     }
 
     private fun logout() {
+        auth.signOut()
         sessionManager.clearSession()
         startActivity(Intent(requireContext(), LoginActivity::class.java))
         requireActivity().finish()

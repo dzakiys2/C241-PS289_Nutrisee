@@ -28,6 +28,8 @@ class CustomViewEmail: AppCompatEditText {
         super.onDraw(canvas)
         hint = "your.email@gmail.com"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+        setHintTextColor(context.getColor(R.color.soft_gray))
+        setTextColor(context.getColor(R.color.black))
     }
 
     private fun init() {

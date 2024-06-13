@@ -1,17 +1,18 @@
 package com.dicoding.nutriseeapp.model
 
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 data class NewsResponse(
     val articles: List<Article>
 )
 
+@Parcelize
 data class Article(
+    val author: String?,
     val title: String,
-    val author: String,
-    val description: String,
-    val content: String,
-    @SerializedName("urlToImage")
-    val imageUrl: String
-)
-
+    val description: String?,
+    val url: String,
+    val urlToImage: String?,
+    val publishedAt: String
+) : Parcelable

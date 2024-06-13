@@ -19,6 +19,7 @@
         android:layout_below="@id/ivProductImage"
         android:layout_marginTop="16dp"
         android:text="Product Name"
+        android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -29,6 +30,7 @@
         android:layout_below="@id/tvProductName"
         android:layout_marginTop="16dp"
         android:text="Energy:"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -38,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvEnergyLabel"
         android:layout_marginTop="4dp"
+        android:textColor="@color/black"
         android:text="120 kkal"
         android:textSize="16sp" />
 
@@ -48,6 +51,7 @@
         android:layout_below="@id/tvEnergy"
         android:layout_marginTop="16dp"
         android:text="Sugar:"
+        android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -58,6 +62,7 @@
         android:layout_below="@id/tvSugarLabel"
         android:layout_marginTop="4dp"
         android:text="28,00g"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
     <TextView
@@ -68,6 +73,7 @@
         android:layout_marginTop="16dp"
         android:text="Confidence:"
         android:textSize="14sp"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <TextView
@@ -77,6 +83,7 @@
         android:layout_below="@id/tvConfidenceLabel"
         android:layout_marginTop="4dp"
         android:text="98.16%"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
 </RelativeLayout>

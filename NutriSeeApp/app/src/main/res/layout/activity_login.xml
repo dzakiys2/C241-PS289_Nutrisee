@@ -66,8 +66,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:alpha="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:startIconDrawable="@drawable/ic_email">
+                style="@style/CustomTextInputLayout"
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/black">
+
                 <com.dicoding.nutriseeapp.customView.CustomViewEmail
                     android:id="@+id/edt_email"
                     android:layout_width="match_parent"
@@ -94,9 +96,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:alpha="1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/CustomTextInputLayout"
                 app:startIconDrawable="@drawable/ic_key"
-                app:endIconMode="password_toggle">
+                app:endIconMode="password_toggle"
+                app:startIconTint="@color/black"
+                app:endIconTint="@color/black">
 
                 <com.dicoding.nutriseeapp.customView.CustomViewPassword
                     android:id="@+id/edt_password"
@@ -150,6 +154,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_animation"
         android:layout_width="100dp"
