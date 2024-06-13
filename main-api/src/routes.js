@@ -1,9 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const { uploadImage, getToken, getHistoryById, getProductById, getHistoryByUser } = require('./handler');
+const multer = require("multer");
+const {
+  uploadImage,
+  getToken,
+  getHistoryById,
+  getProductById,
+  getHistoryByUser,
+} = require("./handler");
 const upload = multer();
-const {verifyToken} = require('./middleware');
+const { verifyToken } = require("./middleware");
 
 /**
  * @swagger
@@ -34,7 +40,7 @@ const {verifyToken} = require('./middleware');
  *       500:
  *         description: Internal server error.
  */
-router.post('/upload', verifyToken, upload.single('image'), uploadImage);
+router.post("/upload", verifyToken, upload.single("image"), uploadImage);
 
 /**
  * @swagger
@@ -71,9 +77,7 @@ router.post('/upload', verifyToken, upload.single('image'), uploadImage);
  *         description: Bad request - invalid email or password.
  */
 
-router.post('/get-token', getToken);
-
-
+router.post("/get-token", getToken);
 
 /**
  * @swagger
@@ -100,36 +104,36 @@ router.post('/get-token', getToken);
  *       404:
  *         description: History not found.
  */
-router.get('/history/:historyId', getHistoryById, verifyToken);
-  
-  /**
-   * @swagger
-   * /products/{productId}:
-   *   get:
-   *     summary: Get product by ID
-   *     description: Retrieve specific product details by product ID.
-   *     tags:
-   *       - Products
-   *     parameters:
-   *       - in: path
-   *         name: productId
-   *         schema:
-   *           type: string
-   *         required: true
-   *         description: The ID of the product entry
-   *     responses:
-   *       200:
-   *         description: Product details retrieved successfully.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *       404:
-   *         description: Product not found.
-   */
-  router.get('/products/:productId', getProductById, verifyToken);
+router.get("/history/:historyId", getHistoryById, verifyToken);
 
-  /**
+/**
+ * @swagger
+ * /products/{productId}:
+ *   get:
+ *     summary: Get product by ID
+ *     description: Retrieve specific product details by product ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the product entry
+ *     responses:
+ *       200:
+ *         description: Product details retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       404:
+ *         description: Product not found.
+ */
+router.get("/products/:productId", getProductById, verifyToken);
+
+/**
  * @swagger
  * /history:
  *   get:
@@ -236,5 +240,5 @@ router.get('/history/:historyId', getHistoryById, verifyToken);
  *       500:
  *         description: Internal server error.
  */
-  router.get('/history', getHistoryByUser, verifyToken);
+router.get("/history", getHistoryByUser, verifyToken);
 module.exports = router;

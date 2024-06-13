@@ -1,16 +1,16 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const routes = require('./routes');
-const admin = require('firebase-admin');
-const multer = require('multer');
+const routes = require("./routes");
+const admin = require("firebase-admin");
+const multer = require("multer");
 const upload = multer();
-const swaggerJsdoc = require("swagger-jsdoc")
+const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const { swaggerDefinition, options } = require('./swagger.js');
-const cors = require('cors');
-const fs = require('fs');
-const bodyParser = require('body-parser');
-const { nutriScoreCalculator } = require('./functions/nutriscoreCalculator.js');
+const { swaggerDefinition, options } = require("./swagger.js");
+const cors = require("cors");
+const fs = require("fs");
+const bodyParser = require("body-parser");
+const { nutriScoreCalculator } = require("./functions/nutriscoreCalculator.js");
 
 app.use(express.json());
 
@@ -18,19 +18,20 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, 'utf8'));
+const serviceAccount = JSON.parse(
+  fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, "utf8")
+);
 
 const databaseURL = process.env.DATABASE_URL;
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL,
 });
 
-app.use('/', routes);
+app.use("/", routes);
 
-  const specs = swaggerJsdoc(options);
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-
+const specs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 /**
  * @swagger
@@ -85,33 +86,33 @@ app.use('/', routes);
  *       500:
  *         description: Internal server error.
  */
-app.get('/products', async (req, res) => {
-    try {
-        const dbRef = admin.database().ref('products');
-        const snapshot = await dbRef.once('value');
-        const products = snapshot.val();
-  
-        if (!products) {
-            return res.status(404).json({ error: 'No products found' });
-        }
-        
-        // Convert products object into an array of objects
-        const productsArray = Object.keys(products).map(key => ({
-            id: key,
-            ...products[key]
-        }));
-        
-        // Organize products into an object with numeric keys
-        const productsObject = {};
-        productsArray.forEach((product, index) => {
-            productsObject[index] = product;
-        });
+app.get("/products", async (req, res) => {
+  try {
+    const dbRef = admin.database().ref("products");
+    const snapshot = await dbRef.once("value");
+    const products = snapshot.val();
 
-        res.status(200).json(productsObject);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+    if (!products) {
+      return res.status(404).json({ error: "No products found" });
     }
+
+    // Convert products object into an array of objects
+    const productsArray = Object.keys(products).map((key) => ({
+      id: key,
+      ...products[key],
+    }));
+
+    // Organize products into an object with numeric keys
+    const productsObject = {};
+    productsArray.forEach((product, index) => {
+      productsObject[index] = product;
+    });
+
+    res.status(200).json(productsObject);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 nutriScoreCalculator();

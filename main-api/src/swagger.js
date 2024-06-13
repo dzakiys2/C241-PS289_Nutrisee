@@ -8,7 +8,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://240f-2001-448a-50e1-5aea-1cbd-982-bcad-75ba.ngrok-free.app",
         description: 'Development server'
       }
     ],

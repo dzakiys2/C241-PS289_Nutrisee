@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "node ./src/server.js",
+        "start": "node /root/C241-PS289_Nutrisee/main-api/src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -21,8 +21,15 @@
         "google-auth-library": "^9.10.0",
         "multer": "^1.4.5-lts.1",
         "pm2": "^5.4.0",
+        "prettier": "^3.3.2",
+        "prettier-eslint": "^16.3.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1",
         "uuid": "^10.0.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.4.0",
+        "eslint": "^9.4.0",
+        "globals": "^15.4.0"
     }
 }
