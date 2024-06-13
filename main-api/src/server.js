@@ -8,18 +8,21 @@ const swaggerJsdoc = require("swagger-jsdoc")
 const swaggerUi = require("swagger-ui-express");
 const { swaggerDefinition, options } = require('./swagger.js');
 const cors = require('cors');
-
+const fs = require('fs');
+const bodyParser = require('body-parser');
 const { nutriScoreCalculator } = require('./functions/nutriscoreCalculator.js');
 
 app.use(express.json());
 
 // Enable CORS for all routes
+app.use(bodyParser.json());
 app.use(cors());
 
+const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, 'utf8'));
 
 const databaseURL = process.env.DATABASE_URL;
 admin.initializeApp({
-    credential: admin.credential.cert(process.env.FIREBASE_SERVICE_ACCOUNT_KEY),
+    credential: admin.credential.cert(serviceAccount),
     databaseURL
 });
 
