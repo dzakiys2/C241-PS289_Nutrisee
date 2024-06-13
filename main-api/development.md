@@ -47,14 +47,31 @@
 # API Development and Testing Documentation
 
 ## Setting Up
-
-1. Ensure you have all environment variables set up as described above.
-2. Start the **Main API**:
+1. Change directory to main-api folder 
     ```
-    npm start
+    cd main-api
     ```
-3. Start the **ML API** similarly if it's not running already.
-
+2. Ensure you have all environment variables set up as described above.
+3. Install the main-api dependencies
+    ```
+    npm install
+    ```
+4. Start the **Main API**:
+    ```
+    npm run start
+    ```
+5. Change directory to ml-api folder 
+    ```
+    cd ml-api
+    ```
+6. Install the **ML API** libraries.
+    ```
+    pip install -r requirements.txt
+    ```
+7. Start the **ML API** flask server.
+    ```
+    python main.py
+    ```
 ## Using Postman for API Testing
 
 ### Authorization
