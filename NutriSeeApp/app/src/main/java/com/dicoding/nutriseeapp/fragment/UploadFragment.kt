@@ -48,6 +48,7 @@ class UploadFragment : Fragment() {
         btnUpload.setOnClickListener {
             val token = sessionManager.getUserToken()
             if (token != null) {
+                showLoadingFragment()  // Show loading fragment
                 uploadImage(imageUri, token)
             } else {
                 Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
@@ -65,6 +66,7 @@ class UploadFragment : Fragment() {
 
         ApiClient.apiService.uploadImage("Bearer $token", body).enqueue(object : Callback<UserUploadStory> {
             override fun onResponse(call: Call<UserUploadStory>, response: Response<UserUploadStory>) {
+                hideLoadingFragment()  // Hide loading fragment
                 if (response.isSuccessful) {
                     val uploadStory = response.body()
                     if (uploadStory != null && !uploadStory.error) {
@@ -77,7 +79,14 @@ class UploadFragment : Fragment() {
                                 data.productName,
                                 data.nutrition.energy,
                                 data.nutrition.carbohydrate.sugar,
-                                data.confidence
+//                                data.nutrition.carbohydrate.fiber,
+                                data.nutrition.fat.total,
+                                data.nutrition.fat.saturated,
+                                data.nutrition.fat.trans,
+                                data.nutrition.protein,
+                                data.nutrition.sodium,
+                                data.confidence,
+                                data.nutritionFactImage
                             )
                         }
                     } else {
@@ -89,13 +98,25 @@ class UploadFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<UserUploadStory>, t: Throwable) {
+                hideLoadingFragment()  // Hide loading fragment
                 Toast.makeText(requireContext(), "Upload failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun navigateToResultFragment(imageUri: String, productName: String, energy: String, sugar: String, confidence: String) {
-        val fragment = ResultFragment.newInstance(imageUri, productName, energy, sugar, confidence)
+    private fun showLoadingFragment() {
+        parentFragmentManager.commit {
+            replace(R.id.frame_layout, LoadingFragment())
+            addToBackStack(null)
+        }
+    }
+
+    private fun hideLoadingFragment() {
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun navigateToResultFragment(imageUri: String, productName: String, energy: String, sugar: String, totalFat: String, saturatedFat: String, transFat: String, protein: String, sodium: String, confidence: String, nutritionFactImage: String) {
+        val fragment = ResultFragment.newInstance(imageUri, productName, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, nutritionFactImage)
         parentFragmentManager.commit {
             replace(R.id.frame_layout, fragment)
             addToBackStack(null)

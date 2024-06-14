@@ -54,8 +54,17 @@ class HomeFragment : Fragment(), NewsAdapter.OnItemClickListener {
         val apiKey = BuildConfig.NEWS_API_KEY
         val query = "Diabetes OR Nutrition"
         val call = newsApiService.getNews(query, apiKey)
+
+        // Show Lottie animation for loading news
+        binding.lottieAnimationViewArticles.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
+                // Hide Lottie animation
+                binding.lottieAnimationViewArticles.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+
                 if (response.isSuccessful) {
                     val articles = response.body()?.articles ?: emptyList()
                     newsAdapter = NewsAdapter(articles, this@HomeFragment)
@@ -66,6 +75,7 @@ class HomeFragment : Fragment(), NewsAdapter.OnItemClickListener {
             }
 
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+                binding.lottieAnimationViewArticles.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
@@ -75,7 +85,7 @@ class HomeFragment : Fragment(), NewsAdapter.OnItemClickListener {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             val name = user.displayName
-            binding.userNameTextView.text = "Hey, Welcome Back to NutriSee, $name"
+            binding.userNameTextView.text = "$name"
         }
     }
 

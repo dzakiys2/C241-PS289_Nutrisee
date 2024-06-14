@@ -2,27 +2,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.UploadFragment">
+    tools:context=".fragment.UploadFragment"
+    android:padding="16dp"
+    android:background="@color/broken_white">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Analyze Your Image"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_blue"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/abeezee_regular" />
 
     <ImageView
         android:id="@+id/imgPreview"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="-1dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="400dp"
+        android:layout_below="@id/tvHeader"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="20dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_insert_photo" />
+        android:src="@drawable/ic_insert_photo"
+        style="@style/RoundedImage"
+        android:elevation="4dp" />
+
+    <TextView
+        android:id="@+id/tvInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgPreview"
+        android:layout_centerHorizontal="true"
+        android:text="Click the button below to analyze the image."
+        android:textSize="16sp"
+        android:textColor="@color/soft_gray"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/abeezee_regular" />
 
     <Button
         android:id="@+id/btnUpload"
+        style="@style/ButtonDarkBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/tvInstructions"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:paddingStart="24dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="12dp"
         android:text="Analyze"
-        style="@style/ButtonDarkBlue"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>
