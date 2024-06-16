@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 object ApiClient {
-    private const val BASE_URL = "https://bf86-2001-448a-50e1-5aea-889a-76af-f25-895f.ngrok-free.app/"
+    private const val BASE_URL = "https://1e91-2001-448a-50e1-5aea-51a7-2209-47a7-d055.ngrok-free.app/"
     private lateinit var sessionManager: SessionManager
 
     fun initialize(context: Context) {

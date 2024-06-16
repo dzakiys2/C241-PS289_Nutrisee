@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/broken_white"
     android:padding="16dp">
 
@@ -28,11 +29,31 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_insert_photo" />
         <LinearLayout
+            android:id="@+id/timeStamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@id/ivProductImage">
+            <TextView
+                android:id="@+id/tvTimeStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TimeStamp"
+                android:textColor="@color/soft_gray"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/abeezee_regular"
+                android:layout_below="@id/ivProductImage"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/ConfidenceLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_below="@id/ivProductImage">
+            android:layout_below="@id/timeStamp">
 
             <TextView
                 android:id="@+id/tvConfidence"
@@ -66,12 +87,46 @@
             android:textSize="22sp"
             android:textStyle="bold" />
         <LinearLayout
+            android:id="@+id/Barcode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@id/tvProductName">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/TransparantCard"
+                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/ivBarcode"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_barcode" />
+                <TextView
+                    android:id="@+id/tvBarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="{product_barcode}"
+                    android:textColor="@color/soft_gray"
+                    android:layout_marginRight="40dp"
+                    android:textSize="17sp"
+                    android:layout_gravity= "right|center"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/HalalImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="8dp"
-            android:layout_below="@id/tvProductName">
+
+            android:layout_below="@id/Barcode">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,30 +141,32 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_halal" />
                 <TextView
+                    android:id="@+id/tvHalalImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="This product is Halal Certified"
                     android:textColor="@color/soft_gray"
                     android:layout_marginStart="150dp"
                     android:textSize="17sp"
-                    android:layout_gravity= "left|center"
+                    android:layout_gravity= "right|center"
                     android:fontFamily="@font/abeezee_regular"
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/NutriScore"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="8dp"
-            android:layout_below="@id/HalalImage">
-            <androidx.cardview.widget.CardView
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:layout_margin="4dp"
+            android:layout_below="@id/HalalImage"
+            style="@style/WhiteRoundedCard">
+            <LinearLayout
+                android:id="@+id/nutriscoreText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="4dp"
-                style="@style/WhiteRoundedCard">
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
                 <ImageView
                     android:id="@+id/ivNutriScore"
                     android:layout_width="120dp"
@@ -118,26 +175,167 @@
                     android:layout_marginStart="10dp"
                     android:src="@drawable/ic_nutriscore" />
                 <TextView
-                    android:id="@+id/tvNutriScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product’s Nutriscore is  based on calculation of negative part points - positive part points  "
-                    android:textColor="@color/soft_gray"
-                    android:layout_marginStart="150dp"
-                    android:textSize="16sp"
-                    android:layout_gravity= "left|center"
+                    android:layout_gravity="left|center"
+                    android:layout_marginStart="30dp"
                     android:fontFamily="@font/abeezee_regular"
+                    android:text="NutriScore : "
+                    android:textColor="@color/soft_gray"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNutriScoreprofiling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_gravity="left|center"
+                    android:fontFamily="@font/abeezee_regular"
+                    android:text="B "
+                    android:textColor="@color/soft_gray"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvNutriScorelabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/abeezee_regular"
+                android:text="{nutriscore_label_description}"
+                android:textColor="@color/soft_gray"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            style="@style/WhiteRoundedCard"
+            android:layout_below="@id/NutriScore">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Summary"
+                    android:textColor="@color/soft_gray"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/abeezee_regular" />
+                <LinearLayout
+                    android:id="@+id/TotalFatSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/ivStatustotalFat"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img" />
+                    <TextView
+                        android:id="@+id/tvTotalfatSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:text="{summary.total_fat_summary}"
+                        android:textColor="@color/soft_gray"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/SatFatSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/ivStatusSatFat"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img" />
+                    <TextView
+                        android:id="@+id/tvSatfatSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:text="{summary.sat_fat_summary}"
+                        android:textColor="@color/soft_gray"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/SugarSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/ivStatusSugar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img" />
+                    <TextView
+                        android:id="@+id/tvSugarSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:text="{summary.sugar_summary}"
+                        android:textColor="@color/soft_gray"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/SaltSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/ivStatusSalt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/img" />
+                    <TextView
+                        android:id="@+id/tvSaltSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/abeezee_regular"
+                        android:text="{summary.salt_summary}"
+                        android:textColor="@color/soft_gray"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:id="@+id/Nutrition"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginBottom="10dp"
-            android:layout_below="@id/NutriScore">
-
+            android:layout_below="@id/Summary">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -285,7 +483,6 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_ooil" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -296,7 +493,6 @@
                     android:textSize="14sp"
                     android:fontFamily="@font/abeezee_regular"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tvTotalFat"
                     android:layout_width="wrap_content"
@@ -358,10 +554,8 @@
                     android:layout_gravity="left|center"
                     android:textColor="@color/black"
                     android:fontFamily="@font/abeezee_regular"
-
                     android:textSize="14sp"
                     android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tvTransFat"
                     android:layout_width="wrap_content"

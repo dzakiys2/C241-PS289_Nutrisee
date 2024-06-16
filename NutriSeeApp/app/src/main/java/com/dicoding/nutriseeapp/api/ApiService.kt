@@ -1,5 +1,6 @@
 package com.dicoding.nutriseeapp.api
 
+import com.dicoding.nutriseeapp.model.HistoryResponse
 import com.dicoding.nutriseeapp.model.NewsResponse
 import com.dicoding.nutriseeapp.model.UserUploadStory
 import okhttp3.MultipartBody
@@ -24,4 +25,6 @@ interface ApiService {
         @Query("q") query: String,
         @Query("apiKey") apiKey: String
     ): Call<NewsResponse>
+    @GET("history")
+    fun getHistory(): Call<HistoryResponse>
 }

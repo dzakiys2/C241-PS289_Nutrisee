@@ -76,17 +76,32 @@ class UploadFragment : Fragment() {
                         if (data != null) {
                             navigateToResultFragment(
                                 data.productImage,
+                                data.barcode,
+                                data.barcodeUrl,
+                                data.nutritionProfilingClass,
+                                data.halalDescription,
+                                data.statusLogoUrl,
+                                data.nutriScore,
+                                data.nutriScoreLabelDescription,
                                 data.productName,
+                                data.displayTimestamp,
                                 data.nutrition.energy,
                                 data.nutrition.carbohydrate.sugar,
-//                                data.nutrition.carbohydrate.fiber,
                                 data.nutrition.fat.total,
                                 data.nutrition.fat.saturated,
                                 data.nutrition.fat.trans,
                                 data.nutrition.protein,
                                 data.nutrition.sodium,
                                 data.confidence,
-                                data.nutritionFactImage
+                                data.nutritionFactImage,
+                                data.summary.totalFatSummary,
+                                data.summary.satFatSummary,
+                                data.summary.sugarSummary,
+                                data.summary.saltSummary,
+                                data.summary.totalFatStatusUrl,
+                                data.summary.satFatStatusUrl,
+                                data.summary.sugarStatusUrl,
+                                data.summary.saltStatusUrl
                             )
                         }
                     } else {
@@ -115,8 +130,39 @@ class UploadFragment : Fragment() {
         parentFragmentManager.popBackStack()
     }
 
-    private fun navigateToResultFragment(imageUri: String, productName: String, energy: String, sugar: String, totalFat: String, saturatedFat: String, transFat: String, protein: String, sodium: String, confidence: String, nutritionFactImage: String) {
-        val fragment = ResultFragment.newInstance(imageUri, productName, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, nutritionFactImage)
+    private fun navigateToResultFragment(
+        imageUri: String,
+        barcode: String,
+        barcodeUrl: String,
+        nutritionProfilingClass: String,
+        halalDescription: String,
+        statusLogoUrl: String,
+        nutriScore: String,
+        nutriScoreLabelDescription: String,
+        productName: String,
+        displayTimestamp: String,
+        energy: String,
+        sugar: String,
+        totalFat: String,
+        saturatedFat: String,
+        transFat: String,
+        protein: String,
+        sodium: String,
+        confidence: String,
+        nutritionFactImage: String,
+        totalFatSummary: String,
+        satFatSummary: String,
+        sugarSummary: String,
+        saltSummary: String,
+        totalFatStatusUrl: String,
+        satFatStatusUrl: String,
+        sugarStatusUrl: String,
+        saltStatusUrl: String
+    ) {
+        val fragment = ResultFragment.newInstance(
+            imageUri, barcode, barcodeUrl, nutritionProfilingClass, halalDescription, statusLogoUrl, nutriScore, nutriScoreLabelDescription, productName,
+            displayTimestamp, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, nutritionFactImage, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
+        )
         parentFragmentManager.commit {
             replace(R.id.frame_layout, fragment)
             addToBackStack(null)

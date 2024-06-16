@@ -10,14 +10,18 @@ import com.dicoding.nutriseeapp.fragment.HomeFragment
 import com.dicoding.nutriseeapp.fragment.SearchFragment
 import com.dicoding.nutriseeapp.fragment.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var fabCamera: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottomNavigation)
+        bottomNavigation = findViewById(R.id.bottomNavigation)
+        fabCamera = findViewById(R.id.fab_camera)
 
         loadFragment(HomeFragment())
 
@@ -31,10 +35,6 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(SearchFragment())
                     true
                 }
-                R.id.nav_camera -> {
-                    loadFragment(CameraFragment())
-                    true
-                }
                 R.id.nav_history -> {
                     loadFragment(HistoryFragment())
                     true
@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        fabCamera.setOnClickListener {
+            loadFragment(CameraFragment())
         }
     }
 
