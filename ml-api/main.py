@@ -51,10 +51,16 @@ def classify_image():
         predicted_class = class_names[predicted_class_index]
         confidence = np.max(predictions)
 
+        predictions_with_labels = [
+            {class_name: float(predictions[0][i])}
+            for i, class_name in enumerate(class_names)
+        ]
+        
         result = {
             'predictions': predictions.tolist(),
             'prediction_label': int(predicted_class_index),
             'product_name': predicted_class,
+            'predictions_with_labels': predictions_with_labels,
             'confidence': float(confidence)
         }
 
