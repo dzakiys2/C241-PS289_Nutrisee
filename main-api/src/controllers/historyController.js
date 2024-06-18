@@ -16,7 +16,7 @@ const getHistoryByUser = async (req, res) => {
       const historyData = [];
   
       snapshot.forEach((childSnapshot) => {
-        historyData.push({ id: childSnapshot.key, ...childSnapshot.val() });
+        historyData.push({ history_id: childSnapshot.key, ...childSnapshot.val() });
       });
   
       const historyObject = {};
@@ -51,7 +51,7 @@ const getHistoryByUser = async (req, res) => {
       }
   
        // Convert history data into an object with numeric keys
-       const historyArray = [{ id: historyId, ...historyData }];
+       const historyArray = [{ history_id: historyId, ...historyData }];
        const historyObject = {};
        historyArray.forEach((history, index) => {
          historyObject[index] = history;
