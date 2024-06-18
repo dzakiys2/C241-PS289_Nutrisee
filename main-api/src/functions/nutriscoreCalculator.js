@@ -29,12 +29,14 @@ const nutriScoreCalculator = async () => {
       const fiber =
         extractNumericValue(product.nutrisi.karbohidrat.serat || "0g") * factor;
       console.log(fiber);
+      const fruitsVegetables = 
+      extractNumericValue(product.nutrisi.fvl || "0g") * factor;
       const type = product.type;
       const sub_type = product.sub_type;
 
       // NutriScore calculation
-      const { totalNPoints, totalPPoints, nutritionalScore } =
-        calculateNutriScore(energy, sugar, satFat, salt, protein, fiber);
+      const { totalNPoints, totalPPoints, nutritionalScore, NPoints, PPoints } =
+        calculateNutriScore(energy, sugar, satFat, salt, protein, fiber, fruitsVegetables);
 
       // Determine NutriScore letter
       const nutriScoreLetter = determineNutriScoreLetter(
@@ -45,14 +47,83 @@ const nutriScoreCalculator = async () => {
       console.log(nutriScoreLetter);
 
       // Generate NutriScore badge link
-      const nutriscore = `https://storage.googleapis.com/${bucketName}/nutriscores/nutriscore_${nutriScoreLetter}.png`;
+      const nutriscore = `https://storage.googleapis.com/${bucketName}/nutriscores/nutriscore_${nutriScoreLetter}.png`
+      const nutrient_profiling_class = `${nutriScoreLetter}`;
+      const nutriscore_label_description = getNutriScoreDescription(nutriScoreLetter);
 
-      // Update product data in Firebase with the generated NutriScore badge link
+      const totalFatPercentage = ((extractNumericValue(product.nutrisi.lemak.total) / servingSize) * 100).toFixed(2); // Daily value for total fat is 70g
+      const satFatPercentage = ((extractNumericValue(product.nutrisi.lemak.jenuh) / servingSize) * 100).toFixed(2); // Daily value for saturated fat is 20g
+      const sugarPercentage = ((extractNumericValue(product.nutrisi.karbohidrat.gula) / servingSize) * 100).toFixed(2); // Daily value for sugars is 90g
+      const saltPercentage = (((extractNumericValue(product.nutrisi.sodium) / servingSize) / 1000) * 100).toFixed(2); // Daily value for salt is 6g
+      
+      const thresholds = {
+        totalFat: { low: 15, moderate: 20 },
+        satFat: { low: 7, moderate: 12 },
+        sugar: { low: 3, moderate: 5 },
+        salt: { low: 0.7, moderate: 1.2 },
+      };
+
+      const classifyPercentage = (percentage, thresholds) => {
+        if (percentage <= thresholds.low) return "low";
+        if (percentage <= thresholds.moderate) return "moderate";
+        return "high";
+      };
+      
+      const getStatusImageUrl = (status) => {
+        switch (status) {
+          case "low":
+            return "https://storage.googleapis.com/bucket_nutrisee/status/eclipse-green.png";
+          case "moderate":
+            return "https://storage.googleapis.com/bucket_nutrisee/status/eclipse-yellow.png";
+          case "high":
+            return "https://storage.googleapis.com/bucket_nutrisee/status/eclipse-red.png";
+          default:
+            return "https://storage.googleapis.com/bucket_nutrisee/status/eclipse-grey.png";
+        }
+      };
+
+      const total_fat_status = classifyPercentage(totalFatPercentage, thresholds.totalFat);
+      const total_fat_percentage = totalFatPercentage;
+      const total_fat_summary = `Total fat in ${total_fat_status} quantity (${total_fat_percentage}%)`;
+      const  sat_fat_status = classifyPercentage(satFatPercentage, thresholds.satFat);
+      const  sat_fat_percentage = satFatPercentage;
+      const  sat_fat_summary = `Total saturated fat in ${sat_fat_status} quantity (${sat_fat_percentage}%)`;
+      const  sugar_status = classifyPercentage(sugarPercentage, thresholds.sugar);
+      const  sugar_percentage = sugarPercentage;
+      const  sugar_summary = `Total sugar in ${sugar_status} quantity (${sugar_percentage}%)`;
+      const  salt_status = classifyPercentage(saltPercentage, thresholds.salt);
+      const  salt_percentage = saltPercentage;
+      const salt_summary = `Total salt in ${salt_status} quantity (${salt_percentage}%)`;
+      const summary = {
+        total_fat_status: total_fat_status,
+        total_fat_percentage: totalFatPercentage,
+        total_fat_summary: total_fat_summary,
+        total_fat_status_url: getStatusImageUrl(total_fat_status),
+        sat_fat_status: sat_fat_status,
+        sat_fat_percentage: satFatPercentage,
+        sat_fat_summary: sat_fat_summary,
+        sat_fat_status_url: getStatusImageUrl(sat_fat_status),
+        sugar_status: classifyPercentage(sugarPercentage, thresholds.sugar),
+        sugar_percentage: sugarPercentage,
+        sugar_summary: sugar_summary,
+        sugar_status_url: getStatusImageUrl(sugar_status),
+        salt_status: classifyPercentage(saltPercentage, thresholds.salt),
+        salt_percentage: saltPercentage,
+        salt_summary: salt_summary,
+        salt_status_url: getStatusImageUrl(salt_status),
+      };
+
       await admin
         .database()
         .ref("products")
         .child(productId)
-        .update({ nutriscore, totalNPoints, totalPPoints });
+        .update({ nutriscore, halal_description, nutrient_profiling_class, nutriscore_label_description,
+        summary,
+        nutrition_fact_image: nutrition_image_link,
+        product_image: image_link,
+        status_logo_url: status_logo_url,
+        barcode_url: "https://storage.googleapis.com/bucket_nutrisee/dummybarcode.png",
+      });
 
       console.log(`NutriScore badge generated for product ${productId}`);
     }
@@ -63,7 +134,7 @@ const nutriScoreCalculator = async () => {
   }
 };
 
-const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber) => {
+const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber, fruitsVegetables) => {
   const getNPoints = (value, thresholds) => {
     for (let i = 0; i < thresholds.length; i++) {
       if (i === 0 && value <= thresholds[i]) return i;
@@ -85,11 +156,12 @@ const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber) => {
   const PPoints = {
     protein: getNPoints(protein, [2.4, 4.8, 7.2, 9.6, 12, 14, 17]),
     fiber: getNPoints(fiber, [3, 4.1, 5.2, 6.3, 7.4]),
+    fruitsVegetables: getNPoints(fruitsVegetables, [3, 4.1, 5.2, 6.3, 7.4]) // belum fix
   };
 
   const totalNPoints =
     NPoints.energy + NPoints.sugars + NPoints.satFat + NPoints.salt;
-  const totalPPoints = PPoints.protein + PPoints.fiber;
+  const totalPPoints = PPoints.protein + PPoints.fiber + PPoints.fruitsVegetables;
 
   let nutritionalScore;
   if (totalNPoints < 11) {
@@ -98,7 +170,7 @@ const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber) => {
     nutritionalScore = totalNPoints - PPoints.fiber;
   }
 
-  return { totalNPoints, totalPPoints, nutritionalScore };
+  return { totalNPoints, totalPPoints, nutritionalScore, NPoints, PPoints };
 };
 
 // Example function for determining NutriScore letter
@@ -129,6 +201,20 @@ const determineNutriScoreLetter = (score, type, sub_type) => {
   }
 };
 
+const getNutriScoreDescription = (letter) => {
+  switch (letter) {
+    case "A":
+      return "Very good nutritional quality";
+    case "B":
+      return "Good nutritional quality";
+    case "C":
+      return "Average nutritional quality";
+    case "D":
+      return "Poor nutritional quality";
+    case "E":
+      return "Bad nutritional quality";
+  }
+};
 module.exports = {
   calculateNutriScore,
   determineNutriScoreLetter,
