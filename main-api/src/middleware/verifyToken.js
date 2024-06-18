@@ -1,8 +1,6 @@
 const admin = require("firebase-admin");
 require("dotenv").config();
 
-const databaseURL = process.env.DATABASE_URL;
-
 const verifyToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
