@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/broken_white"
     tools:context=".fragment.UserFragment">
-
     <LinearLayout
         android:id="@+id/top_section"
         android:layout_width="match_parent"
@@ -35,7 +34,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
-
                 <TextView
                     android:id="@+id/userNameTextView"
                     android:layout_width="wrap_content"
@@ -46,7 +44,6 @@
                     android:textColor="@color/dark_blue"
                     android:fontFamily="@font/abeezee_regular"
                     android:gravity="start" />
-
                 <TextView
                     android:id="@+id/userEmailTextView"
                     android:layout_width="wrap_content"
@@ -56,7 +53,6 @@
                     android:textColor="@color/dark_blue"
                     android:fontFamily="@font/abeezee_regular"
                     android:gravity="start" />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -65,42 +61,45 @@
             android:layout_height="170dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:gravity="center"
             android:backgroundTint="@color/soft_blue"
+            android:gravity="center"
             app:cardCornerRadius="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:textSize="24sp"
-                android:text="@string/freeacc"
-                android:textColor="@color/broken_white"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:textAlignment="center"
                 android:fontFamily="@font/abeezee_regular"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="@string/freeacc"
+                android:textAlignment="center"
+                android:textColor="@color/broken_white"
+                android:textSize="24sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:textSize="24sp"
-                android:text="@string/free_tier"
-                android:textColor="@color/light_gray"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:textAlignment="center"
                 android:fontFamily="@font/abeezee_regular"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="@string/free_tier"
+                android:textAlignment="center"
+                android:textColor="@color/light_gray"
+                android:textSize="24sp" />
+
             <Button
+                style="@style/ButtonWhite"
                 android:layout_width="280dp"
                 android:layout_height="65dp"
-                android:layout_marginTop="100dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="100dp"
                 android:text="@string/text_premium"
                 android:textColor="@color/orange"
-                android:textSize="15sp"
-                style="@style/ButtonWhite"/>
+                android:textSize="15sp" />
         </androidx.cardview.widget.CardView>
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="300dp"

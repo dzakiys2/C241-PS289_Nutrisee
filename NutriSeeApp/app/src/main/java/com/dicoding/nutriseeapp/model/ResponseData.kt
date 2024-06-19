@@ -2,7 +2,7 @@ package com.dicoding.nutriseeapp.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserUploadStory(
+data class UserUploadData(
     @field:SerializedName("error")
     val error: Boolean,
 
@@ -10,10 +10,15 @@ data class UserUploadStory(
     val message: String,
 
     @field:SerializedName("data")
-    val data: UploadData?
+    val data: Data?
 )
 
-data class UploadData(
+data class HistoryResponse(
+    @field:SerializedName("data")
+    val data: Map<String, Data>
+)
+
+data class Data(
     @field:SerializedName("history_id")
     val historyId: String,
 

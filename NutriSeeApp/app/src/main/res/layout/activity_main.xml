@@ -16,26 +16,25 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_camera"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="50dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ic_camera"
+        android:layout_marginBottom="17dp"
         android:contentDescription="@string/camera"
-        app:backgroundTint="@drawable/item_selector"
-        app:tint="@android:color/white"
+        android:src="@drawable/ic_camera"
+        app:backgroundTint="@color/light_gray"
         app:elevation="6dp"
-        app:maxImageSize="35dp" />
-
+        app:maxImageSize="35dp"
+        app:tint="@color/dark_blue" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:background="@drawable/bg_nav"
         android:layout_gravity="bottom"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginTop="30dp"
         app:itemIconSize="30dp"
         app:itemRippleColor="@android:color/transparent"
@@ -44,5 +43,4 @@
         app:labelVisibilityMode="unlabeled"
         app:itemActiveIndicatorStyle="@android:color/transparent"
         app:menu="@menu/bottom_menu" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

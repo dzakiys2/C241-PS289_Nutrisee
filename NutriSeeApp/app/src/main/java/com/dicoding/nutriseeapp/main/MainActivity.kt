@@ -1,13 +1,16 @@
 package com.dicoding.nutriseeapp.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dicoding.nutriseeapp.R
 import com.dicoding.nutriseeapp.fragment.CameraFragment
+import com.dicoding.nutriseeapp.fragment.HistoryDetailFragment
 import com.dicoding.nutriseeapp.fragment.HistoryFragment
 import com.dicoding.nutriseeapp.fragment.HomeFragment
 import com.dicoding.nutriseeapp.fragment.SearchFragment
+import com.dicoding.nutriseeapp.fragment.UploadFragment
 import com.dicoding.nutriseeapp.fragment.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,12 +53,33 @@ class MainActivity : AppCompatActivity() {
         fabCamera.setOnClickListener {
             loadFragment(CameraFragment())
         }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+            if (currentFragment is CameraFragment || currentFragment is UploadFragment || currentFragment is HistoryDetailFragment) {
+                bottomNavigation.visibility = View.GONE
+                fabCamera.visibility = View.GONE
+            } else {
+                bottomNavigation.visibility = View.VISIBLE
+                fabCamera.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.frame_layout, fragment)
+            .addToBackStack(null)
             .commit()
+
+        // Hide bottom navigation and FAB if the fragment is CameraFragment or UploadFragment
+        if (fragment is CameraFragment || fragment is UploadFragment || fragment is HistoryDetailFragment) {
+            bottomNavigation.visibility = View.GONE
+            fabCamera.visibility = View.GONE
+        } else {
+            bottomNavigation.visibility = View.VISIBLE
+            fabCamera.visibility = View.VISIBLE
+        }
     }
 }

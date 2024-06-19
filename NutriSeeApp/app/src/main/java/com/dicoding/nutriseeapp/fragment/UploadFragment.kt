@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.dicoding.nutriseeapp.R
 import com.dicoding.nutriseeapp.api.ApiClient
-import com.dicoding.nutriseeapp.model.UserUploadStory
+import com.dicoding.nutriseeapp.model.UserUploadData
 import com.dicoding.nutriseeapp.utils.SessionManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -64,8 +64,8 @@ class UploadFragment : Fragment() {
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-        ApiClient.apiService.uploadImage("Bearer $token", body).enqueue(object : Callback<UserUploadStory> {
-            override fun onResponse(call: Call<UserUploadStory>, response: Response<UserUploadStory>) {
+        ApiClient.apiService.uploadImage("Bearer $token", body).enqueue(object : Callback<UserUploadData> {
+            override fun onResponse(call: Call<UserUploadData>, response: Response<UserUploadData>) {
                 hideLoadingFragment()  // Hide loading fragment
                 if (response.isSuccessful) {
                     val uploadStory = response.body()
@@ -93,7 +93,7 @@ class UploadFragment : Fragment() {
                                 data.nutrition.protein,
                                 data.nutrition.sodium,
                                 data.confidence,
-                                data.nutritionFactImage,
+                      //          data.nutritionFactImage,
                                 data.summary.totalFatSummary,
                                 data.summary.satFatSummary,
                                 data.summary.sugarSummary,
@@ -112,7 +112,7 @@ class UploadFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<UserUploadStory>, t: Throwable) {
+            override fun onFailure(call: Call<UserUploadData>, t: Throwable) {
                 hideLoadingFragment()  // Hide loading fragment
                 Toast.makeText(requireContext(), "Upload failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
@@ -149,7 +149,7 @@ class UploadFragment : Fragment() {
         protein: String,
         sodium: String,
         confidence: String,
-        nutritionFactImage: String,
+  //      nutritionFactImage: String,
         totalFatSummary: String,
         satFatSummary: String,
         sugarSummary: String,
@@ -161,7 +161,7 @@ class UploadFragment : Fragment() {
     ) {
         val fragment = ResultFragment.newInstance(
             imageUri, barcode, barcodeUrl, nutritionProfilingClass, halalDescription, statusLogoUrl, nutriScore, nutriScoreLabelDescription, productName,
-            displayTimestamp, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, nutritionFactImage, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
+            displayTimestamp, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
         )
         parentFragmentManager.commit {
             replace(R.id.frame_layout, fragment)

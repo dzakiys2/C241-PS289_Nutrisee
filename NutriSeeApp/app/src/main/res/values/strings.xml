@@ -32,6 +32,4 @@
     <string name="app_version">App Version \t\t\t\t\t\t\t\t\t\t\t\t 1.0.0</string>
     <string name="free_tier">Free Tier</string>
     <string name="language">Language</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

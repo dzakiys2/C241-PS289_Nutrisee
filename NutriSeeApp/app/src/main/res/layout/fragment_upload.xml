@@ -5,7 +5,14 @@
     tools:context=".fragment.UploadFragment"
     android:padding="16dp"
     android:background="@color/broken_white">
-
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_arrow_back"/>
     <TextView
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
@@ -25,7 +32,7 @@
         android:layout_height="400dp"
         android:layout_below="@id/tvHeader"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_insert_photo"
         style="@style/RoundedImage"

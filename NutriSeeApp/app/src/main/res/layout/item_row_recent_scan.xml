@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/abeezee_regular"
-                    android:text="ProudctName"
+                    android:text="ProudctName title"
                     android:textColor="@color/dark_blue"
                     android:textSize="14sp" />
 
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/abeezee_regular"
                     android:text="timestamp"
                     android:textColor="@color/soft_gray"
-                    android:textSize="8sp" />
+                    android:textSize="9sp" />
 
                 <ImageView
                     android:id="@+id/ivNutriScore"

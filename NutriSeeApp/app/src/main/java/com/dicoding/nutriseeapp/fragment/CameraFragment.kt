@@ -20,7 +20,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.dicoding.nutriseeapp.R
@@ -37,6 +36,7 @@ class CameraFragment : Fragment() {
     private lateinit var flipCameraButton: Button
     private lateinit var captureButton: Button
     private lateinit var galleryButton: Button
+    private lateinit var homeButton: Button
     private lateinit var previewView: PreviewView
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraExecutor: ExecutorService
@@ -66,6 +66,7 @@ class CameraFragment : Fragment() {
         flipCameraButton = view.findViewById(R.id.flipCameraButton)
         captureButton = view.findViewById(R.id.captureButton)
         galleryButton = view.findViewById(R.id.galleryButton)
+        homeButton = view.findViewById(R.id.homeButton)
 
         captureButton.setOnClickListener {
             takePhoto()
@@ -77,6 +78,10 @@ class CameraFragment : Fragment() {
 
         galleryButton.setOnClickListener {
             chooseFromGallery()
+        }
+
+        homeButton.setOnClickListener {
+            navigateToHomeFragment()
         }
 
         if (allPermissionsGranted()) {
@@ -166,7 +171,6 @@ class CameraFragment : Fragment() {
     private fun startUCrop(sourceUri: Uri) {
         val destinationUri = Uri.fromFile(File(requireContext().cacheDir, "IMG_CROPPED.jpg"))
         val options = UCrop.Options().apply {
-            setFreeStyleCropEnabled(true)
             setHideBottomControls(true)
         }
         UCrop.of(sourceUri, destinationUri)
@@ -214,6 +218,10 @@ class CameraFragment : Fragment() {
             replace(R.id.frame_layout, fragment)
             addToBackStack(null)
         }
+    }
+
+    private fun navigateToHomeFragment() {
+        parentFragmentManager.popBackStackImmediate()
     }
 
     companion object {

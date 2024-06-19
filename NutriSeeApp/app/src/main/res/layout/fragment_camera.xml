@@ -14,33 +14,40 @@
 
     <Button
         android:id="@+id/flipCameraButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
         style="@style/ButtonWhite"
         android:background="@drawable/ic_flip_camera" />
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        style="@style/ButtonWhite"
+        android:background="@drawable/ic_arrow_back"/>
 
     <Button
         android:id="@+id/captureButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="90dp"
         style="@style/ButtonWhite"
-        android:background="@drawable/ic_camera"/>
+        android:background="@drawable/ic_circle"/>
 
     <Button
         android:id="@+id/galleryButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="90dp"
         style="@style/ButtonWhite"
         android:background="@drawable/ic_gallery" />
 
