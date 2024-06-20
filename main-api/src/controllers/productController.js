@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 
-const getProducts = async (res) => {
+const getProducts = async (req, res) => {
     try {
       const dbRef = admin.database().ref("products");
       const snapshot = await dbRef.once("value");
@@ -31,9 +31,26 @@ const getProducts = async (res) => {
   
   const getProductByBarcode = async (req, res) => {
   const barcode = req.params.barcode;
-
   try {
-    const productRef = admin.database().ref("products").child(barcode);
+    const productRef = admin.database().ref("products").child.child(barcode);
+    const snapshot = await productRef.once("value");
+    const productData = snapshot.val();
+
+    if (!productData) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.status(200).json({ data: productData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const getProductById= async (req, res) => {
+  const productId = req.params.productId;
+  try {
+    const productRef = admin.database().ref("products").child(productId);
     const snapshot = await productRef.once("value");
     const productData = snapshot.val();
 
@@ -51,5 +68,6 @@ const getProducts = async (res) => {
 module.exports = {
     getProducts,
     getProductByBarcode,
+    getProductById
   };
   
