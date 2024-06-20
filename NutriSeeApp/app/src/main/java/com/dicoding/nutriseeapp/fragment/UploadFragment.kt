@@ -60,7 +60,6 @@ class UploadFragment : Fragment() {
 
     private fun uploadImage(imageUri: Uri, token: String) {
         val file = File(imageUri.path!!)
-
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val body = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
@@ -84,6 +83,7 @@ class UploadFragment : Fragment() {
                                 data.nutriScore,
                                 data.nutriScoreLabelDescription,
                                 data.productName,
+                                data.brandName,
                                 data.displayTimestamp,
                                 data.nutrition.energy,
                                 data.nutrition.carbohydrate.sugar,
@@ -93,7 +93,7 @@ class UploadFragment : Fragment() {
                                 data.nutrition.protein,
                                 data.nutrition.sodium,
                                 data.confidence,
-                      //          data.nutritionFactImage,
+                                //data.nutritionFactImage,
                                 data.summary.totalFatSummary,
                                 data.summary.satFatSummary,
                                 data.summary.sugarSummary,
@@ -140,6 +140,7 @@ class UploadFragment : Fragment() {
         nutriScore: String,
         nutriScoreLabelDescription: String,
         productName: String,
+        brandName : String,
         displayTimestamp: String,
         energy: String,
         sugar: String,
@@ -149,7 +150,6 @@ class UploadFragment : Fragment() {
         protein: String,
         sodium: String,
         confidence: String,
-  //      nutritionFactImage: String,
         totalFatSummary: String,
         satFatSummary: String,
         sugarSummary: String,
@@ -157,10 +157,11 @@ class UploadFragment : Fragment() {
         totalFatStatusUrl: String,
         satFatStatusUrl: String,
         sugarStatusUrl: String,
-        saltStatusUrl: String
+        saltStatusUrl: String,
+        //nutritionFactImage: String
     ) {
         val fragment = ResultFragment.newInstance(
-            imageUri, barcode, barcodeUrl, nutritionProfilingClass, halalDescription, statusLogoUrl, nutriScore, nutriScoreLabelDescription, productName,
+            imageUri, barcode, barcodeUrl, nutritionProfilingClass, halalDescription, statusLogoUrl, nutriScore, nutriScoreLabelDescription, productName, brandName,
             displayTimestamp, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
         )
         parentFragmentManager.commit {

@@ -1,6 +1,7 @@
 package com.dicoding.nutriseeapp.api
 
 import android.content.Context
+import com.dicoding.nutriseeapp.BuildConfig
 import com.dicoding.nutriseeapp.utils.SessionManager
 import com.google.firebase.auth.FirebaseAuth
 import okhttp3.Interceptor
@@ -12,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 object ApiClient {
-    private const val BASE_URL = "https://6e3c-36-81-180-167.ngrok-free.app/"
+    private const val BASE_URL = BuildConfig.API_NUTRISEE_URL
     private lateinit var sessionManager: SessionManager
 
     fun initialize(context: Context) {

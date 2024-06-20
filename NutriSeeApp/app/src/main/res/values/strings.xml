@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NutriSeeApp</string>
+    <string name="app_name">NutriSee</string>
     <string name="welcome">Welcome!</string>
     <string name="onboard1"> NutriSee provides tailored dietary advice based on your individual needs and goals, helping you make informed nutrition choices for a healthier lifestyle.!</string>
     <string name="next">Next</string>

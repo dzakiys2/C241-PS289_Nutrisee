@@ -14,6 +14,7 @@ class ResultFragment : Fragment() {
 
     private lateinit var productImageView: ImageView
     private lateinit var productNameTextView: TextView
+    private lateinit var brandNameTextView: TextView
     private lateinit var barcodeTextView: TextView
     private lateinit var barcodeUrlImageView: ImageView
     private lateinit var nutritionProfilingClassTextView: TextView
@@ -52,6 +53,7 @@ class ResultFragment : Fragment() {
         statusLogoImageView = view.findViewById(R.id.ivHalalImage)
         nutriScoreImageView = view.findViewById(R.id.ivNutriScore)
         productNameTextView = view.findViewById(R.id.tvProductName)
+        brandNameTextView = view.findViewById(R.id.tvBrandName)
         nutritionProfilingClassTextView = view.findViewById(R.id.tvNutriScoreprofiling)
         halalDescriptionTextView = view.findViewById(R.id.tvHalalImage)
         nutriScoreLabelDescriptionTextView = view.findViewById(R.id.tvNutriScorelabel)
@@ -64,7 +66,7 @@ class ResultFragment : Fragment() {
         sodiumTextView = view.findViewById(R.id.tvSodium)
         confidenceTextView = view.findViewById(R.id.tvConfidence)
         displayTimestampTextView = view.findViewById(R.id.tvTimeStamp)
-//        nutritionFactImageView = view.findViewById(R.id.ivNutritionFactImage)
+        //nutritionFactImageView = view.findViewById(R.id.ivNutritionFactImage)
         totalFatSummaryTextView = view.findViewById(R.id.tvTotalfatSummary)
         satFatSummaryTextView = view.findViewById(R.id.tvSatfatSummary)
         sugarSummaryTextView = view.findViewById(R.id.tvSugarSummary)
@@ -77,6 +79,7 @@ class ResultFragment : Fragment() {
         arguments?.let {
             val imageUri = it.getString(ARG_IMAGE_URI)
             val productName = it.getString(ARG_PRODUCT_NAME)
+            val brandName = it.getString(ARG_BRAND_NAME)
             val barcode = it.getString(ARG_BARCODE)
             val barcodeUrl = it.getString(ARG_BARCODE_URL)
             val nutritionProfilingClass = it.getString(ARG_NUTRITION_PROFILING_CLASS)
@@ -93,7 +96,7 @@ class ResultFragment : Fragment() {
             val protein = it.getString(ARG_PROTEIN)
             val sodium = it.getString(ARG_SODIUM)
             val confidence = it.getString(ARG_CONFIDENCE)
-       //     val nutritionFactImage = it.getString(ARG_NUTRITION_FACT_IMAGE)
+            //val nutritionFactImage = it.getString(ARG_NUTRITION_FACT_IMAGE)
             val totalFatSummary = it.getString(ARG_TOTAL_FAT_SUMMARY)
             val satFatSummary = it.getString(ARG_SAT_FAT_SUMMARY)
             val sugarSummary = it.getString(ARG_SUGAR_SUMMARY)
@@ -123,10 +126,7 @@ class ResultFragment : Fragment() {
                 .fitCenter()
                 .into(nutriScoreImageView)
 
-        //    Glide.with(this)
-           //     .load(nutritionFactImage)
-           //     .fitCenter()
-//.into(nutritionFactImageView)
+            //Glide.with(this).load(nutritionFactImage).fitCenter().into(nutritionFactImageView)
 
             Glide.with(this)
                 .load(totalFatStatusUrl)
@@ -149,6 +149,7 @@ class ResultFragment : Fragment() {
                 .into(saltStatusImageView)
 
             productNameTextView.text = productName
+            brandNameTextView.text = brandName
             barcodeTextView.text = barcode
             nutritionProfilingClassTextView.text = nutritionProfilingClass
             halalDescriptionTextView.text = halalDescription
@@ -167,13 +168,13 @@ class ResultFragment : Fragment() {
             sugarSummaryTextView.text = sugarSummary
             saltSummaryTextView.text = saltSummary
         }
-
         return view
     }
 
     companion object {
         private const val ARG_IMAGE_URI = "image_uri"
         private const val ARG_PRODUCT_NAME = "product_name"
+        private const val ARG_BRAND_NAME = "brand_name"
         private const val ARG_BARCODE = "barcode"
         private const val ARG_BARCODE_URL = "barcode_url"
         private const val ARG_NUTRITION_PROFILING_CLASS = "nutrition_profiling_class"
@@ -190,7 +191,7 @@ class ResultFragment : Fragment() {
         private const val ARG_PROTEIN = "protein"
         private const val ARG_SODIUM = "sodium"
         private const val ARG_CONFIDENCE = "confidence"
-      //  private const val ARG_NUTRITION_FACT_IMAGE = "nutrition_fact_image"
+        //private const val ARG_NUTRITION_FACT_IMAGE = "nutrition_fact_image"
         private const val ARG_TOTAL_FAT_SUMMARY = "total_fat_summary"
         private const val ARG_SAT_FAT_SUMMARY = "sat_fat_summary"
         private const val ARG_SUGAR_SUMMARY = "sugar_summary"
@@ -211,6 +212,7 @@ class ResultFragment : Fragment() {
             nutriScore: String,
             nutriScoreLabelDescription: String,
             productName: String,
+            brandName: String,
             displayTimestamp: String,
             energy: String,
             sugar: String,
@@ -220,7 +222,7 @@ class ResultFragment : Fragment() {
             protein: String,
             sodium: String,
             confidence: String,
-         //   nutritionFactImage: String,
+            //nutritionFactImage: String,
             totalFatSummary: String,
             satFatSummary: String,
             sugarSummary: String,
@@ -234,6 +236,7 @@ class ResultFragment : Fragment() {
                 arguments = Bundle().apply {
                     putString(ARG_IMAGE_URI, imageUri)
                     putString(ARG_PRODUCT_NAME, productName)
+                    putString(ARG_BRAND_NAME, brandName)
                     putString(ARG_BARCODE, barcode)
                     putString(ARG_BARCODE_URL, barcodeUrl)
                     putString(ARG_NUTRITION_PROFILING_CLASS, nutritionProfilingClass)
@@ -250,7 +253,7 @@ class ResultFragment : Fragment() {
                     putString(ARG_PROTEIN, protein)
                     putString(ARG_SODIUM, sodium)
                     putString(ARG_CONFIDENCE, confidence)
-                 //   putString(ARG_NUTRITION_FACT_IMAGE, nutritionFactImage)
+                    //putString(ARG_NUTRITION_FACT_IMAGE, nutritionFactImage)
                     putString(ARG_TOTAL_FAT_SUMMARY, totalFatSummary)
                     putString(ARG_SAT_FAT_SUMMARY, satFatSummary)
                     putString(ARG_SUGAR_SUMMARY, sugarSummary)

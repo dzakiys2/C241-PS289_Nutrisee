@@ -125,7 +125,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationViewRecentScan"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -256,7 +256,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationViewArticles"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -266,6 +266,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
             android:layout_marginTop="8dp" />
     </LinearLayout>
 </ScrollView>

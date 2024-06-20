@@ -105,7 +105,6 @@
             android:layout_width="300dp"
             android:layout_height="65dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"
             android:text="@string/sign_out"
             android:textColor="@color/dark_blue"
             android:drawableLeft="@drawable/ic_logout"
@@ -113,16 +112,16 @@
             android:gravity="left|center"
             android:drawablePadding="8dp"
             style="@style/ButtonWhite"/>
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="65dp"
-            android:text="@string/language"
-            android:textColor="@color/dark_blue"
-            android:drawableLeft="@drawable/ic_language"
-            android:drawableRight="@drawable/ic_arrow"
-            android:gravity="left|center"
-            android:drawablePadding="8dp"
-            style="@style/ButtonWhite"/>
+<!--        <Button-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:text="@string/language"-->
+<!--            android:textColor="@color/dark_blue"-->
+<!--            android:drawableLeft="@drawable/ic_language"-->
+<!--            android:drawableRight="@drawable/ic_arrow"-->
+<!--            android:gravity="left|center"-->
+<!--            android:drawablePadding="8dp"-->
+<!--            style="@style/ButtonWhite"/>-->
         <Button
             android:layout_width="300dp"
             android:layout_height="65dp"

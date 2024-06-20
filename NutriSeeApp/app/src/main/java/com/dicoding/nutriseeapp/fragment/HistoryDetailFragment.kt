@@ -22,6 +22,7 @@ class HistoryDetailFragment : Fragment() {
 
     private lateinit var productImageView: ImageView
     private lateinit var productNameTextView: TextView
+    private lateinit var brandNameTextView: TextView
     private lateinit var timestampTextView: TextView
     private lateinit var confidenceTextView: TextView
     private lateinit var barcodeTextView: TextView
@@ -58,6 +59,7 @@ class HistoryDetailFragment : Fragment() {
 
         productImageView = view.findViewById(R.id.ivProductImage)
         productNameTextView = view.findViewById(R.id.tvProductName)
+        brandNameTextView = view.findViewById(R.id.tvBrandName)
         timestampTextView = view.findViewById(R.id.tvTimeStamp)
         confidenceTextView = view.findViewById(R.id.tvConfidence)
         barcodeTextView = view.findViewById(R.id.tvBarcode)
@@ -120,6 +122,7 @@ class HistoryDetailFragment : Fragment() {
     private fun updateUI(data: Data) {
         Glide.with(this).load(data.productImage).fitCenter().into(productImageView)
         productNameTextView.text = data.productName
+        brandNameTextView.text = data.brandName
         timestampTextView.text = data.displayTimestamp
         confidenceTextView.text = data.confidence
         barcodeTextView.text = data.barcode

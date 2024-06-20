@@ -9,6 +9,8 @@ import com.dicoding.nutriseeapp.fragment.CameraFragment
 import com.dicoding.nutriseeapp.fragment.HistoryDetailFragment
 import com.dicoding.nutriseeapp.fragment.HistoryFragment
 import com.dicoding.nutriseeapp.fragment.HomeFragment
+import com.dicoding.nutriseeapp.fragment.LoadingFragment
+import com.dicoding.nutriseeapp.fragment.ResultFragment
 import com.dicoding.nutriseeapp.fragment.SearchFragment
 import com.dicoding.nutriseeapp.fragment.UploadFragment
 import com.dicoding.nutriseeapp.fragment.UserFragment
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.addOnBackStackChangedListener {
             val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
-            if (currentFragment is CameraFragment || currentFragment is UploadFragment || currentFragment is HistoryDetailFragment) {
+            if (currentFragment is CameraFragment || currentFragment is UploadFragment || currentFragment is HistoryDetailFragment || currentFragment is ResultFragment || currentFragment is LoadingFragment) {
                 bottomNavigation.visibility = View.GONE
                 fabCamera.visibility = View.GONE
             } else {
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         // Hide bottom navigation and FAB if the fragment is CameraFragment or UploadFragment
-        if (fragment is CameraFragment || fragment is UploadFragment || fragment is HistoryDetailFragment) {
+        if (fragment is CameraFragment || fragment is UploadFragment || fragment is HistoryDetailFragment || fragment is ResultFragment || fragment is LoadingFragment) {
             bottomNavigation.visibility = View.GONE
             fabCamera.visibility = View.GONE
         } else {

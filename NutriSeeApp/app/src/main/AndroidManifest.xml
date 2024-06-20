@@ -75,4 +75,7 @@
     <meta-data
         android:name="NEWS_API_KEY"
         android:value="${NEWS_API_KEY}"/>
+    <meta-data
+        android:name="API_NUTRISEE_URL"
+        android:value="${API_NUTRISEE_URL}"/>
 </manifest>
