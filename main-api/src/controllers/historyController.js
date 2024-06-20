@@ -50,14 +50,14 @@ const getHistoryByUser = async (req, res) => {
         return res.status(404).json({ error: "History not found" });
       }
   
-       // Convert history data into an object with numeric keys
-       const historyArray = [{ history_id: historyId, ...historyData }];
-       const historyObject = {};
-       historyArray.forEach((history, index) => {
-         historyObject[index] = history;
-       });
+      //  // Convert history data into an object with numeric keys
+      //  const historyArray = [{ history_id: historyId, ...historyData }];
+      //  const historyObject = {};
+      //  historyArray.forEach((history, index) => {
+      //    historyObject[index] = history;
+      //  });
    
-       res.status(200).json({ data: historyObject });
+       res.status(200).json({ data: historyData });
      } catch (error) {
        console.error(error);
        res.status(500).json({ error: "Internal server error" });
