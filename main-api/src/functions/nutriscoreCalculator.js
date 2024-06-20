@@ -15,11 +15,11 @@ const nutriScoreCalculator = async () => {
       // Extract numeric values from product data
       const servingSize = extractNumericValue(product.ukuran_porsi); // Assuming serving size is in grams
       const factor = 100 / servingSize;
-      const energy = extractNumericValue(product.nutrisi.energi) * factor;
-      console.log(energy);
+      const energy = extractNumericValue(product.nutrisi.energi) * factor * 4.184;
+      console.log(`energi: ${energy}`);
       const sugar =
-        extractNumericValue(product.nutrisi.karbohidrat.gula) * factor;
-      console.log(sugar);
+      extractNumericValue(product.nutrisi.karbohidrat.gula) * factor;
+      console.log(`sugar: ${sugar}`);
       const satFat = extractNumericValue(product.nutrisi.lemak.jenuh) * factor;
       console.log(satFat);
       const salt = extractNumericValue(product.nutrisi.sodium) * factor;
@@ -36,7 +36,7 @@ const nutriScoreCalculator = async () => {
 
       // NutriScore calculation
       const { totalNPoints, totalPPoints, nutritionalScore, NPoints, PPoints } =
-        calculateNutriScore(energy, sugar, satFat, salt, protein, fiber, fruitsVegetables);
+        calculateNutriScore(energy, sugar, satFat, salt, protein, fiber, fruitsVegetables, type);
 
       // Determine NutriScore letter
       const nutriScoreLetter = determineNutriScoreLetter(
@@ -117,11 +117,8 @@ const nutriScoreCalculator = async () => {
         .database()
         .ref("products")
         .child(productId)
-        .update({ nutriscore, halal_description, nutrient_profiling_class, nutriscore_label_description,
+        .update({ nutriscore, nutrient_profiling_class, nutriscore_label_description,
         summary,
-        nutrition_fact_image: nutrition_image_link,
-        product_image: image_link,
-        status_logo_url: status_logo_url,
         barcode_url: "https://storage.googleapis.com/bucket_nutrisee/dummybarcode.png",
       });
 
@@ -134,7 +131,7 @@ const nutriScoreCalculator = async () => {
   }
 };
 
-const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber, fruitsVegetables) => {
+const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber, fruitsVegetables, type) => {
   const getNPoints = (value, thresholds) => {
     for (let i = 0; i < thresholds.length; i++) {
       if (i === 0 && value <= thresholds[i]) return i;
@@ -143,21 +140,39 @@ const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber, fruits
     return thresholds.length;
   };
 
-  const NPoints = {
-    energy: getNPoints(
-      energy,
-      [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200]
-    ),
-    sugars: getNPoints(sugar, [3.4, 6.8, 10, 14, 17, 20, 24, 27, 31, 34]),
-    satFat: getNPoints(satFat, [10, 16, 22, 28, 34, 40, 46, 52, 58, 64]),
-    salt: getNPoints(salt, [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2]),
-  };
+  const NPoints = {};
+  if (type === "beverages") {
+    NPoints.energy = getNPoints(energy, [30, 90, 150, 240, 270, 300, 330, 360, 390, 400]);
+    NPoints.sugars = getNPoints(sugar, [0.5, 2, 3.5, 6, 7, 8, 9, 10, 11, 12]);
+    NPoints.satFat = getNPoints(satFat, [1, 2, 4, 5, 6, 7, 8, 9, 10, 11]);
+    NPoints.salt = getNPoints(salt, [0.2, 0.4, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4]);
+  } else if
+    (type === "animals fats" || type === "vegetable fats" || type === "nuts" || type === "seeds" ) {
+    NPoints.energy = getNPoints(energy, [120, 240, 360, 480, 600, 720, 840, 960, 1080, 1200]);
+    NPoints.sugars = getNPoints(sugar, [3.4, 6.8, 10, 14, 17, 20, 24, 27, 31, 34, 37, 41, 44, 48, 51]);
+    NPoints.satFat = getNPoints(satFat, [10, 16, 22, 28, 34, 40, 46, 52, 58, 64]);
+    NPoints.salt = getNPoints(salt, [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4]);
+  } else {
+    NPoints.energy = getNPoints(energy, [335, 670, 1005, 1340, 1675, 2010, 2345, 2680, 3015, 3350]);
+    NPoints.sugars = getNPoints(sugar, [3.4, 6.8, 10, 14, 17, 20, 24, 27, 31, 34, 37, 41, 44, 48, 51]);
+    NPoints.satFat = getNPoints(satFat, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    NPoints.salt = getNPoints(salt, [0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.4, 3.8, 4]);
+  }
 
-  const PPoints = {
-    protein: getNPoints(protein, [2.4, 4.8, 7.2, 9.6, 12, 14, 17]),
-    fiber: getNPoints(fiber, [3, 4.1, 5.2, 6.3, 7.4]),
-    fruitsVegetables: getNPoints(fruitsVegetables, [3, 4.1, 5.2, 6.3, 7.4]) // belum fix
-  };
+ 
+  const PPoints = {};
+  if (type === "beverages") {
+    PPoints.protein = getNPoints(protein, [1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3.0]);
+    PPoints.fiber = getNPoints(fiber, [3, 4.1, 5.2, 6.3, 7.4]);
+  } else if (type === "animal fats" || type === "vegetable fats" || type === "nuts" || type === "seeds" ) {
+    PPoints.protein = getNPoints(protein, [2.4, 4.8, 7.2, 9.6, 12, 14, 17]);
+    PPoints.fiber = getNPoints(fiber, [3, 4.1, 5.2, 6.3, 7.4]);
+  } else {
+    PPoints.protein = getNPoints(protein, [2.4, 4.8, 7.2, 9.6, 12, 14, 17]);
+    PPoints.fiber = getNPoints(fiber, [3, 4.1, 5.2, 6.3, 7.4]);
+  }
+  PPoints.fruitsVegetables = getNPoints(fruitsVegetables, [40, 60, 80]);
+
 
   const totalNPoints =
     NPoints.energy + NPoints.sugars + NPoints.satFat + NPoints.salt;
@@ -169,7 +184,13 @@ const calculateNutriScore = (energy, sugar, satFat, salt, protein, fiber, fruits
   } else {
     nutritionalScore = totalNPoints - PPoints.fiber;
   }
-
+  console.log(`ppoints: ${totalPPoints}`);
+  console.log(`npoints: ${totalNPoints}`);
+  console.log(`sugar points: ${NPoints.sugars}`);
+  console.log(`salt points: ${NPoints.salt}`);
+  console.log(`energy points: ${NPoints.energy}`);
+  console.log(`protein points: ${PPoints.protein}`);
+  console.log(`serat points: ${PPoints.fiber}`);
   return { totalNPoints, totalPPoints, nutritionalScore, NPoints, PPoints };
 };
 
