@@ -1,14 +1,19 @@
 package com.dicoding.nutriseeapp.fragment
 
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.dicoding.nutriseeapp.R
+import com.dicoding.nutriseeapp.model.Carbohydrate
 
 class ResultFragment : Fragment() {
 
@@ -23,6 +28,7 @@ class ResultFragment : Fragment() {
     private lateinit var nutriScoreImageView: ImageView
     private lateinit var nutriScoreLabelDescriptionTextView: TextView
     private lateinit var energyTextView: TextView
+    private lateinit var totalCarbohydrateTextView: TextView
     private lateinit var sugarTextView: TextView
     private lateinit var totalFatTextView: TextView
     private lateinit var saturatedFatTextView: TextView
@@ -31,7 +37,7 @@ class ResultFragment : Fragment() {
     private lateinit var sodiumTextView: TextView
     private lateinit var confidenceTextView: TextView
     private lateinit var displayTimestampTextView: TextView
-    private lateinit var nutritionFactImageView: ImageView
+    //private lateinit var nutritionFactImageView: ImageView
     private lateinit var totalFatSummaryTextView: TextView
     private lateinit var satFatSummaryTextView: TextView
     private lateinit var sugarSummaryTextView: TextView
@@ -40,6 +46,7 @@ class ResultFragment : Fragment() {
     private lateinit var satFatStatusImageView: ImageView
     private lateinit var sugarStatusImageView: ImageView
     private lateinit var saltStatusImageView: ImageView
+    private lateinit var backButton: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +65,7 @@ class ResultFragment : Fragment() {
         halalDescriptionTextView = view.findViewById(R.id.tvHalalImage)
         nutriScoreLabelDescriptionTextView = view.findViewById(R.id.tvNutriScorelabel)
         energyTextView = view.findViewById(R.id.tvEnergy)
+        totalCarbohydrateTextView = view.findViewById(R.id.tvTotalCarbohydrate)
         sugarTextView = view.findViewById(R.id.tvSugar)
         totalFatTextView = view.findViewById(R.id.tvTotalFat)
         saturatedFatTextView = view.findViewById(R.id.tvSaturatedFat)
@@ -75,7 +83,11 @@ class ResultFragment : Fragment() {
         satFatStatusImageView = view.findViewById(R.id.ivStatusSatFat)
         sugarStatusImageView = view.findViewById(R.id.ivStatusSugar)
         saltStatusImageView = view.findViewById(R.id.ivStatusSalt)
+        backButton = view.findViewById(R.id.btn_back)
 
+        backButton.setOnClickListener {
+            navigateToHistoryFragment()
+        }
         arguments?.let {
             val imageUri = it.getString(ARG_IMAGE_URI)
             val productName = it.getString(ARG_PRODUCT_NAME)
@@ -90,6 +102,7 @@ class ResultFragment : Fragment() {
             val displayTimestamp = it.getString(ARG_DISPLAY_TIMESTAMP)
             val energy = it.getString(ARG_ENERGY)
             val sugar = it.getString(ARG_SUGAR)
+            val totalCarbohydrate = it.getString(ARG_TOTAL_CARBOHYDRATE)
             val totalFat = it.getString(ARG_TOTAL_FAT)
             val saturatedFat = it.getString(ARG_SATURATED_FAT)
             val transFat = it.getString(ARG_TRANS_FAT)
@@ -156,6 +169,7 @@ class ResultFragment : Fragment() {
             nutriScoreLabelDescriptionTextView.text = nutriScoreLabelDescription
             displayTimestampTextView.text = displayTimestamp
             energyTextView.text = energy
+            totalCarbohydrateTextView.text = totalCarbohydrate
             sugarTextView.text = sugar
             totalFatTextView.text = totalFat
             saturatedFatTextView.text = saturatedFat
@@ -169,6 +183,13 @@ class ResultFragment : Fragment() {
             saltSummaryTextView.text = saltSummary
         }
         return view
+    }
+    private fun navigateToHistoryFragment() {
+        val fragment = HistoryFragment()
+        parentFragmentManager.commit {
+            replace(R.id.frame_layout, fragment)
+            addToBackStack(null)
+        }
     }
 
     companion object {
@@ -184,6 +205,7 @@ class ResultFragment : Fragment() {
         private const val ARG_NUTRISCORE_LABEL_DESCRIPTION = "nutriscore_label_description"
         private const val ARG_DISPLAY_TIMESTAMP = "display_timestamp"
         private const val ARG_ENERGY = "energy"
+        private const val ARG_TOTAL_CARBOHYDRATE = "total"
         private const val ARG_SUGAR = "sugar"
         private const val ARG_TOTAL_FAT = "total_fat"
         private const val ARG_SATURATED_FAT = "saturated_fat"
@@ -215,6 +237,7 @@ class ResultFragment : Fragment() {
             brandName: String,
             displayTimestamp: String,
             energy: String,
+            total: String,
             sugar: String,
             totalFat: String,
             saturatedFat: String,
@@ -246,6 +269,7 @@ class ResultFragment : Fragment() {
                     putString(ARG_NUTRISCORE_LABEL_DESCRIPTION, nutriScoreLabelDescription)
                     putString(ARG_DISPLAY_TIMESTAMP, displayTimestamp)
                     putString(ARG_ENERGY, energy)
+                    putString(ARG_TOTAL_CARBOHYDRATE, total)
                     putString(ARG_SUGAR, sugar)
                     putString(ARG_TOTAL_FAT, totalFat)
                     putString(ARG_SATURATED_FAT, saturatedFat)

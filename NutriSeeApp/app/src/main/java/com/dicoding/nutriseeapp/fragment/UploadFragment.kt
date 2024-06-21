@@ -26,6 +26,7 @@ class UploadFragment : Fragment() {
 
     private lateinit var imgPreview: ImageView
     private lateinit var btnUpload: Button
+    private lateinit var backButton: Button
     private lateinit var sessionManager: SessionManager
     private lateinit var imageUri: Uri
 
@@ -37,7 +38,7 @@ class UploadFragment : Fragment() {
 
         imgPreview = view.findViewById(R.id.imgPreview)
         btnUpload = view.findViewById(R.id.btnUpload)
-
+        backButton = view.findViewById(R.id.homeButton)
         sessionManager = SessionManager(requireContext())
 
         arguments?.getString(ARG_IMAGE_URI)?.let {
@@ -53,6 +54,9 @@ class UploadFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
             }
+        }
+        backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
         return view
@@ -87,6 +91,7 @@ class UploadFragment : Fragment() {
                                 data.displayTimestamp,
                                 data.nutrition.energy,
                                 data.nutrition.carbohydrate.sugar,
+                                data.nutrition.carbohydrate.total,
                                 data.nutrition.fat.total,
                                 data.nutrition.fat.saturated,
                                 data.nutrition.fat.trans,
@@ -143,6 +148,7 @@ class UploadFragment : Fragment() {
         brandName : String,
         displayTimestamp: String,
         energy: String,
+        total: String,
         sugar: String,
         totalFat: String,
         saturatedFat: String,
@@ -162,7 +168,7 @@ class UploadFragment : Fragment() {
     ) {
         val fragment = ResultFragment.newInstance(
             imageUri, barcode, barcodeUrl, nutritionProfilingClass, halalDescription, statusLogoUrl, nutriScore, nutriScoreLabelDescription, productName, brandName,
-            displayTimestamp, energy, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
+            displayTimestamp, energy, total, sugar, totalFat, saturatedFat, transFat, protein, sodium, confidence, totalFatSummary, satFatSummary, sugarSummary, saltSummary, totalFatStatusUrl, satFatStatusUrl, sugarStatusUrl, saltStatusUrl
         )
         parentFragmentManager.commit {
             replace(R.id.frame_layout, fragment)

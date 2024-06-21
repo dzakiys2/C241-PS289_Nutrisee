@@ -89,7 +89,7 @@ class HistoryDetailFragment : Fragment() {
         saltStatusImageView = view.findViewById(R.id.ivStatusSalt)
 
         backButton.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            parentFragmentManager.popBackStackImmediate()
         }
 
         val historyId = arguments?.getString(ARG_HISTORY_ID)
